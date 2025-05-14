@@ -1,5 +1,9 @@
 @import url("reset.css");
 
+:root {
+  --bg-color: rgba(206, 206, 206, 0.452);
+}
+
 body {
   font-family: "Montserrat", Arial, Helvetica, sans-serif;
 }
@@ -16,7 +20,75 @@ body {
 .flex__item {
   width: 300px;
   height: 400px;
-  background-color: rgba(206, 206, 206, 0.452);
+  background-color: var(--bg-color);
   border-radius: 10px;
   box-shadow: 0 5px 15px -10px rgba(0, 0, 0, 0.5);
+  display: flex;
+}
+
+.form {
+  padding: 1rem;
+  width: 100%;
+}
+
+.form__label {
+  position: relative;
+}
+
+.form__input {
+  position: relative;
+  display: inline-block;
+  border: none;
+  width: 100%;
+  background-color: transparent;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.form__label::after {
+  content: "";
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  width: 95%;
+  height: 1px;
+  background-color: rgba(153, 153, 153, 0.425);
+}
+
+.menu-items {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
+.button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.hamburger-closed {
+  width: 35px;
+  height: 35px;
+  background-color: var(--bg-color);
+  padding: 0.4rem;
+  border-radius: 50%;
+}
+
+.hamburger-open {
+  width: 25px;
+  display: none;
+}
+
+.search {
+  width: 35px;
+  height: 35px;
+  background-color: var(--bg-color);
+  padding: 0.4rem;
+  border-radius: 50%;
 }
