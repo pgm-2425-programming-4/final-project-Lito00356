@@ -1,0 +1,22 @@
+@import url("reset.css");
+
+body {
+  font-family: "Montserrat", Arial, Helvetica, sans-serif;
+}
+
+.title {
+  padding: 0.5rem 1rem 0;
+}
+
+.flex {
+  display: flex;
+  padding: 1rem;
+}
+
+.flex__item {
+  width: 300px;
+  height: 400px;
+  background-color: rgba(206, 206, 206, 0.452);
+  border-radius: 10px;
+  box-shadow: 0 5px 15px -10px rgba(0, 0, 0, 0.5);
+}
