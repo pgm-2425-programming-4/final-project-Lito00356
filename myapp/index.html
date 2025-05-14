@@ -15,17 +15,69 @@
 
 <body id="root">
     <h1 class="title">Project title</h1>
-    <div class="flex">
-        <article class="flex__item">
-            <form class="form">
-                <label class="form__label">
-                    <input class="form__input" type="text" placeholder="Title">
-                </label>
-            </form>
-        </article>
-    </div>
+
+    <section class="tasks-container">
+
+        <div class="tasks" id="to-do">
+            <strong class="tasks__title">To Do</strong>
+            <article class="tasks__item">
+                <form class="form">
+                    <label class="form__label">
+                        <input class="form__input" type="text" placeholder="Title">
+                    </label>
+
+                    <textarea class="form__textarea" type="text" placeholder="Description"></textarea>
+
+                </form>
+
+            </article>
+        </div>
+
+        <div class="tasks" id="in-progress">
+            <strong class="tasks__title">In progress</strong>
+            <article class="tasks__item">
+                <form class="form">
+                    <label class="form__label">
+                        <input class="form__input" type="text" placeholder="Title">
+                    </label>
+
+                    <textarea class="form__textarea" type="text" placeholder="Description"></textarea>
+
+                </form>
+            </article>
+        </div>
+
+        <div class="tasks" id="in-progress">
+            <strong class="tasks__title">Ready for review</strong>
+            <article class="tasks__item">
+                <form class="form">
+                    <label class="form__label">
+                        <input class="form__input" type="text" placeholder="Title">
+                    </label>
+
+                    <textarea class="form__textarea" type="text" placeholder="Description"></textarea>
+
+                </form>
+            </article>
+        </div>
+
+        <div class="tasks" id="in-progress">
+            <strong class="tasks__title">Done</strong>
+            <article class="tasks__item">
+                <form class="form">
+                    <label class="form__label">
+                        <input class="form__input" type="text" placeholder="Title">
+                    </label>
+
+                    <textarea class="form__textarea" type="text" placeholder="Description"></textarea>
+
+                </form>
+            </article>
+        </div>
+
+    </section>
     <div class="menu-items">
-        <button class="button hamburger-closed">
+        <button class="button hamburger-closed" id="open-menu">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -36,7 +88,7 @@
                 </g>
             </svg>
         </button>
-        <button class="button hamburger-open">
+        <button class="button hamburger-open" id="close-menu">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -47,7 +99,7 @@
                 </g>
             </svg>
         </button>
-        <button class="button search">
+        <button class="button search" id="filter">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -57,7 +109,8 @@
             </svg>
         </button>
     </div>
-    <script type="module" src="/src/main.jsx"></script>
+    <!-- <script type="module" src="/src/main.jsx"></script> -->
+    <script src="main.js"></script>
 </body>
 
 </html>
