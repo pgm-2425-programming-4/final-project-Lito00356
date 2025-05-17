@@ -1,6 +1,6 @@
 // import { useState } from "react";
 import "./App.css";
-import { Pagination } from "./components/pagination/pagination";
+import { Pagination } from "./components/backlog/pagination/pagination";
 
 export default function MyApp() {
   return (
