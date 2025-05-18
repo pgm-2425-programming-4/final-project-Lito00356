@@ -4,7 +4,6 @@ export function BacklogList({ tasks }) {
       {tasks.map((task) => {
         return <li key={task.id}>{task.title}</li>;
       })}
-      ;
     </ul>
   );
 }
