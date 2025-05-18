@@ -1,12 +1,13 @@
-// import { useState } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+// import { Pagination } from "./components/backlog/pagination/pagination";
 import "./App.css";
-import { Pagination } from "./components/backlog/pagination/pagination";
+
+const queryClient = new QueryClient();
 
 export default function MyApp() {
   return (
-    <div>
-      <h1>Welcome to my page</h1>
+    <QueryClientProvider client={queryClient}>
       <Pagination />
-    </div>
+    </QueryClientProvider>
   );
 }

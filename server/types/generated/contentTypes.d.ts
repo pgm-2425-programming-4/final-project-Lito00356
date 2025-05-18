@@ -396,6 +396,7 @@ export interface ApiProgressStatusProgressStatus
       Schema.Attribute.Private;
     progStatus: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    task: Schema.Attribute.Relation<'oneToOne', 'api::task.task'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -446,7 +447,12 @@ export interface ApiTaskTask extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::task.task'> &
       Schema.Attribute.Private;
+    progress_status: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::progress-status.progress-status'
+    >;
     publishedAt: Schema.Attribute.DateTime;
+    tags: Schema.Attribute.Relation<'oneToMany', 'api::tag.tag'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

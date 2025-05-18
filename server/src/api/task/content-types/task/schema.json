@@ -13,12 +13,22 @@
   "attributes": {
     "title": {
       "type": "string",
-      "regex": "^[a-zA-Z]+:[a-zA-Z]$",
       "required": true
     },
     "description": {
       "type": "text",
       "required": true
+    },
+    "tags": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tag.tag"
+    },
+    "progress_status": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::progress-status.progress-status",
+      "inversedBy": "task"
     }
   }
 }

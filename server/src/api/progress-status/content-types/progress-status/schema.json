@@ -12,6 +12,12 @@
   "attributes": {
     "progStatus": {
       "type": "string"
+    },
+    "task": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::task.task",
+      "mappedBy": "progress_status"
     }
   }
 }
