@@ -98,7 +98,7 @@ body {
 .scroll-menu {
   display: none;
   position: absolute;
-  // width: 15rem;
+  width: 15rem;
   width: 0;
   height: fit-content;
   max-height: 350px;

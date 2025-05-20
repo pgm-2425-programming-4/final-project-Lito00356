@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "progress_statuses",
+  "info": {
+    "singularName": "progress-status",
+    "pluralName": "progress-statuses",
+    "displayName": "progressStatus"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "progStatus": {
+      "type": "string"
+    },
+    "task": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::task.task",
+      "mappedBy": "progress_status"
+    }
+  }
+}
