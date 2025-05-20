@@ -11,7 +11,6 @@ export function PaginatedBacklog() {
   const { isPending, isError, data, error } = useQuery({
     queryKey: ["tasks", currentPage, pageSize],
     queryFn: () => getAllTasks(currentPage, pageSize),
-    keepPreviousData: true,
     staleTime: 1000,
   });
 
