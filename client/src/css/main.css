@@ -112,6 +112,10 @@ body {
   background-color: rgba(153, 153, 153, 0.425);
 }
 
+.form__label--none::after {
+  content: none;
+}
+
 .menu-items {
   position: absolute;
   bottom: 0;

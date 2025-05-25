@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
+import { AddTask } from "./components/add-task/Task";
 // import { Pagination } from "./components/backlog/pagination/pagination";
 import "./App.css";
 import { PaginatedBacklog } from "./components/backlog/paginated-backlog";
@@ -14,52 +15,22 @@ export default function MyApp() {
       <section className="tasks-container">
         <div className="tasks" id="to-do">
           <strong className="tasks__title">To Do</strong>
-          {/* <article className="tasks__item">
-            <form className="form">
-              <label className="form__label">
-                <input className="form__input" type="text" placeholder="Title" />
-              </label>
-            </form>
-          </article> */}
           <AddTask />
         </div>
+
         <div className="tasks" id="in-progress">
           <strong className="tasks__title">In progress</strong>
-          <article className="tasks__item">
-            <form className="form">
-              <label className="form__label">
-                <input className="form__input" type="text" placeholder="Title" />
-              </label>
-
-              <textarea className="form__textarea" type="text" placeholder="Description"></textarea>
-            </form>
-          </article>
+          <AddTask />
         </div>
 
         <div className="tasks" id="in-progress">
           <strong className="tasks__title">Ready for review</strong>
-          <article className="tasks__item">
-            <form className="form">
-              <label className="form__label">
-                <input className="form__input" type="text" placeholder="Title" />
-              </label>
-
-              <textarea className="form__textarea" type="text" placeholder="Description"></textarea>
-            </form>
-          </article>
+          <AddTask />
         </div>
 
         <div className="tasks" id="in-progress">
           <strong className="tasks__title">Done</strong>
-          <article className="tasks__item">
-            <form className="form">
-              <label className="form__label">
-                <input className="form__input" type="text" placeholder="Title" />
-              </label>
-
-              <textarea className="form__textarea" type="text" placeholder="Description"></textarea>
-            </form>
-          </article>
+          <AddTask />
         </div>
       </section>
 
@@ -120,58 +91,5 @@ export default function MyApp() {
         </button>
       </div>
     </QueryClientProvider>
-  );
-}
-
-function AddTask() {
-  const [tasks, setTasks] = useState([]);
-  const [showForm, setShowForm] = useState(false);
-  const [hideAddTask, setHideAddTask] = useState(false);
-
-  function handleAddClick() {
-    setShowForm(true);
-    setHideAddTask(true);
-  }
-
-  function closeForm(e) {
-    e.preventDefault();
-    setShowForm(false);
-    setHideAddTask(false);
-  }
-
-  function addToTaskList() {
-    const newTask = {
-      id: Date.now(),
-      status: "done",
-      title: "",
-    };
-    setTasks((prevTasks) => [...prevTasks, newTask]);
-    setHideAddTask(false);
-  }
-
-  return (
-    <>
-      {showForm ? (
-        <article className="tasks__item">
-          <form className="form">
-            <label className="form__label">
-              <input className="form__input" type="text" placeholder="Title" />
-            </label>
-            <div className="form__commit">
-              <button className="button" onClick={addToTaskList}>
-                Add to list
-              </button>
-              <button className="button form__close" onClick={closeForm}>
-                X
-              </button>
-            </div>
-          </form>
-        </article>
-      ) : null}
-
-      <button className="button" onClick={handleAddClick} style={{ display: hideAddTask ? "none" : "inline-block" }}>
-        + Add Task
-      </button>
-    </>
   );
 }
