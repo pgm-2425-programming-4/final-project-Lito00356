@@ -6,10 +6,12 @@ export function AddTask() {
   const [addTask, setAddTask] = useState(false);
   const [hideAddToList, setHideAddToList] = useState(false);
   const [title, setTitle] = useState("");
+  const [showDialog, setShowDialog] = useState(false);
 
   function openForm() {
     setShowForm(true);
     setAddTask(true);
+    setHideAddToList(false);
   }
 
   function closeForm(event) {
@@ -27,8 +29,8 @@ export function AddTask() {
     setAddTask(false);
   }
 
-  function clicked() {
-    alert("hello");
+  function openDialog() {
+    setShowDialog(true);
   }
 
   return (
@@ -58,11 +60,19 @@ export function AddTask() {
 
       <ul className="task">
         {tasks.map((title, index) => (
-          <li className="task__item" key={index} onClick={clicked}>
+          <li className="task__item" key={index} onClick={openDialog}>
             {title}
           </li>
         ))}
       </ul>
+
+      {showDialog ? (
+        <dialog>
+          <h2>{title}</h2>
+        </dialog>
+      ) : (
+        ""
+      )}
 
       <button className="button" onClick={openForm} style={{ display: addTask ? "none" : "inline-block" }}>
         + Add Task

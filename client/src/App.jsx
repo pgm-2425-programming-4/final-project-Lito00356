@@ -11,10 +11,10 @@ export default function MyApp() {
     <QueryClientProvider client={queryClient}>
       <h1 className="title">Project Title</h1>
       <section className="tasks-container">
-        <ul className="tasks" id="to-do">
+        <div className="tasks" id="to-do">
           <strong className="tasks__title">To Do</strong>
           <AddTask />
-        </ul>
+        </div>
 
         <div className="tasks" id="in-progress">
           <strong className="tasks__title">In progress</strong>
