@@ -13,17 +13,15 @@ export default function MyApp() {
       <section className="tasks-container">
         <div className="tasks" id="to-do">
           <strong className="tasks__title">To Do</strong>
-          <article className="tasks__item">
+          {/* <article className="tasks__item">
             <form className="form">
               <label className="form__label">
                 <input className="form__input" type="text" placeholder="Title" />
               </label>
-
-              <textarea className="form__textarea" type="text" placeholder="Description"></textarea>
             </form>
-          </article>
+          </article> */}
+          <button className="button">+ Add task</button>
         </div>
-
         <div className="tasks" id="in-progress">
           <strong className="tasks__title">In progress</strong>
           <article className="tasks__item">
