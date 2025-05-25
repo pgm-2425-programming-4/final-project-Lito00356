@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useState } from "react";
 // import { Pagination } from "./components/backlog/pagination/pagination";
 import "./App.css";
 import { PaginatedBacklog } from "./components/backlog/paginated-backlog";
@@ -20,7 +21,7 @@ export default function MyApp() {
               </label>
             </form>
           </article> */}
-          <button className="button">+ Add task</button>
+          <AddTask />
         </div>
         <div className="tasks" id="in-progress">
           <strong className="tasks__title">In progress</strong>
@@ -119,5 +120,41 @@ export default function MyApp() {
         </button>
       </div>
     </QueryClientProvider>
+  );
+}
+
+function AddTask() {
+  const [tasks, setTasks] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+
+  function handleAddClick() {
+    setShowForm(true);
+  }
+
+  function addToTaskList() {
+    const newTask = {
+      id: Date.now(),
+      title: "",
+    };
+    setTasks((prevTasks) => [...prevTasks, newTask]);
+  }
+
+  return (
+    <>
+      {showForm ? (
+        <article className="tasks__item">
+          <form className="form">
+            <label className="form__label">
+              <input className="form__input" type="text" placeholder="Title" />
+            </label>
+            <button onClick={addToTaskList}>Add to list</button>
+          </form>
+        </article>
+      ) : null}
+
+      <button className="button" onClick={handleAddClick}>
+        + Add Task
+      </button>
+    </>
   );
 }
