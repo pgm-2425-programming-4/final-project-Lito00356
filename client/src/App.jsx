@@ -126,17 +126,21 @@ export default function MyApp() {
 function AddTask() {
   const [tasks, setTasks] = useState([]);
   const [showForm, setShowForm] = useState(false);
+  const [hideAddTask, setHideAddTask] = useState(false);
 
   function handleAddClick() {
     setShowForm(true);
+    setHideAddTask(true);
   }
 
   function addToTaskList() {
     const newTask = {
       id: Date.now(),
+      status: "done",
       title: "",
     };
     setTasks((prevTasks) => [...prevTasks, newTask]);
+    setHideAddTask(false);
   }
 
   return (
@@ -147,12 +151,17 @@ function AddTask() {
             <label className="form__label">
               <input className="form__input" type="text" placeholder="Title" />
             </label>
-            <button onClick={addToTaskList}>Add to list</button>
+            <div className="form__commit">
+              <button className="button" onClick={addToTaskList}>
+                Add to list
+              </button>
+              <button className="button form__close">X</button>
+            </div>
           </form>
         </article>
       ) : null}
 
-      <button className="button" onClick={handleAddClick}>
+      <button className="button" onClick={handleAddClick} style={{ display: hideAddTask ? "none" : "inline-block" }}>
         + Add Task
       </button>
     </>
