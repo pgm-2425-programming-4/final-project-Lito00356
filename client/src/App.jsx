@@ -133,6 +133,12 @@ function AddTask() {
     setHideAddTask(true);
   }
 
+  function closeForm(e) {
+    e.preventDefault();
+    setShowForm(false);
+    setHideAddTask(false);
+  }
+
   function addToTaskList() {
     const newTask = {
       id: Date.now(),
@@ -155,7 +161,9 @@ function AddTask() {
               <button className="button" onClick={addToTaskList}>
                 Add to list
               </button>
-              <button className="button form__close">X</button>
+              <button className="button form__close" onClick={closeForm}>
+                X
+              </button>
             </div>
           </form>
         </article>
