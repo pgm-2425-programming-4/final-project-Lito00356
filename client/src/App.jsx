@@ -1,7 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import { AddTask } from "./components/add-task/Task";
-// import { Pagination } from "./components/backlog/pagination/pagination";
 import "./App.css";
 import { PaginatedBacklog } from "./components/backlog/paginated-backlog";
 
@@ -10,13 +9,12 @@ const queryClient = new QueryClient();
 export default function MyApp() {
   return (
     <QueryClientProvider client={queryClient}>
-      {/* <PaginatedBacklog /> */}
       <h1 className="title">Project Title</h1>
       <section className="tasks-container">
-        <div className="tasks" id="to-do">
+        <ul className="tasks" id="to-do">
           <strong className="tasks__title">To Do</strong>
           <AddTask />
-        </div>
+        </ul>
 
         <div className="tasks" id="in-progress">
           <strong className="tasks__title">In progress</strong>

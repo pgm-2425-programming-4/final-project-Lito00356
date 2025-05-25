@@ -7,7 +7,7 @@ export function AddTask() {
   const [hideAddToList, setHideAddToList] = useState(false);
   const [title, setTitle] = useState("");
 
-  function handleAddClick() {
+  function openForm() {
     setShowForm(true);
     setAddTask(true);
   }
@@ -22,17 +22,22 @@ export function AddTask() {
     event.preventDefault();
     setTasks([...tasks, title]);
     setTitle("");
+    setShowForm(false);
     setHideAddToList(true);
     setAddTask(false);
+  }
+
+  function clicked() {
+    alert("hello");
   }
 
   return (
     <>
       {showForm ? (
-        <article className="tasks__item">
+        <article className="task__item task__item--creation">
           <form className="form">
             <label className={`form__label ${addTask ? "" : "form__label--none"}`}>
-              <input className="form__input" type="text" placeholder="Title" />
+              <input className="form__input" type="text" placeholder="Title" vlaue={title} onChange={(e) => setTitle(e.target.value)} />
             </label>
             <div
               className="form__commit"
@@ -40,7 +45,7 @@ export function AddTask() {
                 display: hideAddToList ? "none" : "flex",
               }}
             >
-              <button className="button" onClick={addTaskToList}>
+              <button type="submit" className="button" onClick={addTaskToList}>
                 Add to list
               </button>
               <button className="button form__close" onClick={closeForm}>
@@ -51,7 +56,15 @@ export function AddTask() {
         </article>
       ) : null}
 
-      <button className="button" onClick={handleAddClick} style={{ display: addTask ? "none" : "inline-block" }}>
+      <ul className="task">
+        {tasks.map((title, index) => (
+          <li className="task__item" key={index} onClick={clicked}>
+            {title}
+          </li>
+        ))}
+      </ul>
+
+      <button className="button" onClick={openForm} style={{ display: addTask ? "none" : "inline-block" }}>
         + Add Task
       </button>
     </>
