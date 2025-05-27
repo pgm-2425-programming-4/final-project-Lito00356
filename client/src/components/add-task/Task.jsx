@@ -35,6 +35,14 @@ export function AddTask() {
 
   return (
     <>
+      <ul className="task">
+        {tasks.map((title, index) => (
+          <li className="task__item" key={index} onClick={openDialog}>
+            {title}
+          </li>
+        ))}
+      </ul>
+
       {showForm ? (
         <article className="task__item task__item--creation">
           <form className="form">
@@ -58,17 +66,10 @@ export function AddTask() {
         </article>
       ) : null}
 
-      <ul className="task">
-        {tasks.map((title, index) => (
-          <li className="task__item" key={index} onClick={openDialog}>
-            {title}
-          </li>
-        ))}
-      </ul>
-
       {showDialog ? (
-        <dialog>
-          <h2>{title}</h2>
+        <dialog className="modal" open>
+          <h2>Tihis is my modal</h2>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia sunt optio hic earum praesentium eius consectetur molestias, et sapiente provident expedita reprehenderit asperiores deserunt, ipsum libero quos vitae beatae modi minima ut vero distinctio. Veniam nam ut hic veritatis harum mollitia totam ipsam eaque incidunt, temporibus culpa eius corporis? Accusantium.</p>
         </dialog>
       ) : (
         ""

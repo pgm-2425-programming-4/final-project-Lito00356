@@ -1,0 +1,12 @@
+.modal {
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 35rem;
+  height: 50rem;
+  max-width: 45rem;
+  max-height: 60rem;
+  border-radius: 10px;
+  border: 2px solid var(--bg-color-hover);
+  box-shadow: var(--box-shadow);
+}
