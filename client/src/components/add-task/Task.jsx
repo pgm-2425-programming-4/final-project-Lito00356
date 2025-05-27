@@ -68,8 +68,22 @@ export function AddTask() {
 
       {showDialog ? (
         <dialog className="modal" open>
-          <h2>Tihis is my modal</h2>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia sunt optio hic earum praesentium eius consectetur molestias, et sapiente provident expedita reprehenderit asperiores deserunt, ipsum libero quos vitae beatae modi minima ut vero distinctio. Veniam nam ut hic veritatis harum mollitia totam ipsam eaque incidunt, temporibus culpa eius corporis? Accusantium.</p>
+          <div className="modal__section-1">
+            <h2>Task title</h2>
+            <ul className="modal__tags">
+              <li className="modal__tags-item">front-end</li>
+              <li className="modal__tags-item">backend</li>
+              <li className="modal__tags-item">JS</li>
+              <li className="modal__tags-item">HTML</li>
+            </ul>
+            <strong>Description</strong>
+            <p className="modal__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia sunt optio hic earum praesentium eius consectetur molestias, et sapiente provident expedita reprehenderit asperiores deserunt, ipsum libero quos vitae beatae modi minima ut vero distinctio. Veniam nam ut hic veritatis harum mollitia totam ipsam eaque incidunt, temporibus culpa eius corporis? Accusantium.</p>
+          </div>
+          <div className="modal__section-2">
+            <p className="modal__close">X</p>
+            <button>edit task</button>
+            <button>delete task</button>
+          </div>
         </dialog>
       ) : (
         ""
