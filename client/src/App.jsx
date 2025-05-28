@@ -42,34 +42,10 @@ export default function MyApp() {
           </div>
           <div className="menu__projects">
             <strong className="menu__projects-title">Other projects</strong>
-            <a href="">Project 1</a>
-            <a href="">Project 2</a>
-            <a href="">Project 3</a>
-            <a href="">Project 4</a>
-            <a href="">Project 5</a>
-            <a href="">Project 6</a>
-            <a href="">Project 7</a>
-            <a href="">Project 8</a>
-            <a href="">Project 9</a>
-            <a href="">Project 10</a>
-            <a href="">Project 11</a>
-            <a href="">Project 12</a>
-            <a href="">Project 13</a>
-            <a href="">Project 14</a>
           </div>
         </div>
         <ProjectMenu />
-        <button className="button hamburger-open" id="closed-menu">
-          <svg className="" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-            <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-            <g id="SVGRepo_iconCarrier">
-              <path d="M4 18H10" stroke="#000000" strokeWidth="2" strokeLinecap="round" />
-              <path d="M4 12L16 12" stroke="#000000" strokeWidth="2" strokeLinecap="round" />
-              <path d="M4 6L20 6" stroke="#000000" strokeWidth="2" strokeLinecap="round" />
-            </g>
-          </svg>
-        </button>
+
         <SearchBar />
       </div>
     </QueryClientProvider>

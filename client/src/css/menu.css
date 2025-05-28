@@ -15,11 +15,11 @@
 }
 
 .scroll-menu {
-  display: inline;
+  display: none;
   position: absolute;
   bottom: 1rem;
   right: 3.5rem;
-  width: 10rem;
+  width: 12rem;
   height: fit-content;
   padding: 1rem;
   border-radius: 5px 5px 0 5px;
@@ -30,6 +30,11 @@
     left: 3.5rem;
     border-radius: 5px 5px 5px 0;
   }
+}
+
+.scroll-menu.open {
+  width: 12rem;
+  transition: width 1s ease;
 }
 
 .menu__current-project {
@@ -80,16 +85,6 @@
   display: block;
 }
 
-.hamburger-open {
-  display: none;
-  position: absolute;
-  bottom: 1rem;
-  left: 16px;
-  width: 40px;
-  height: 40px;
-  padding: 0.4rem;
-}
-
 .search {
   bottom: 1rem;
   left: 3.8rem;
@@ -100,22 +95,9 @@
   padding: 0.4rem;
 }
 
-.hamburger-opened.open {
-  display: block;
-}
-
-.hamburger-closed.open {
-  display: none;
-}
-
 .hamburger.open {
   display: block;
   margin-right: 15.5rem;
   border-radius: 50% 0 0 50%;
   transition: margin-right 1s ease;
-}
-
-.scroll-menu.open {
-  width: 15rem;
-  transition: width 1s ease;
 }
