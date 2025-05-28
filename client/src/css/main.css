@@ -1,4 +1,5 @@
 @import url("reset.css");
+@import url("button.css");
 @import url("modal.css");
 
 :root {
@@ -9,17 +10,6 @@
 
 body {
   font-family: "Montserrat", Arial, Helvetica, sans-serif;
-}
-
-.button {
-  border: none;
-  border-radius: 0.625rem;
-  text-align: left;
-  padding: 0.5rem 0.75rem;
-
-  &:hover {
-    background-color: var(--bg-color-hover);
-  }
 }
 
 .title {
@@ -34,7 +24,6 @@ body {
 .tasks-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
 
   @media (min-width: 42rem) {
     justify-content: flex-start;
@@ -137,24 +126,30 @@ body {
 .menu-items {
   position: absolute;
   bottom: 0;
-  left: 0;
+  right: 0;
   display: flex;
+  flex-direction: row-reverse;
   gap: 0.5rem;
   padding: 1rem;
+
+  @media (min-width: 42rem) {
+    bottom: 0;
+    left: 0;
+    flex-direction: row;
+  }
 }
 
 .scroll-menu {
-  display: none;
+  display: inline;
   position: absolute;
   width: 15rem;
-  width: 0;
+  left: 3.1875rem;
+  bottom: 1rem;
   height: fit-content;
   max-height: 350px;
   overflow-y: auto;
   background-color: var(--bg-color);
   padding: 1rem;
-  bottom: 16px;
-  left: 51px;
   transition: width 1s ease;
 
   @starting-style {
@@ -180,12 +175,6 @@ body {
   align-self: flex-start;
 }
 
-.button {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-}
-
 .form__close {
   border-radius: 5px;
   padding: 0.25rem 0.5rem;
@@ -199,7 +188,6 @@ body {
 }
 
 .hamburger {
-  position: absolute;
   bottom: 1rem;
   width: 40px;
   height: 40px;
@@ -223,7 +211,6 @@ body {
 }
 
 .search {
-  position: absolute;
   bottom: 1rem;
   left: 3.8rem;
   width: 40px;
