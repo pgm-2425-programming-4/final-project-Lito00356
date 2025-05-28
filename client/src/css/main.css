@@ -128,12 +128,14 @@ body {
   bottom: 0;
   right: 0;
   display: flex;
+  flex-direction: row-reverse;
   gap: 0.5rem;
   padding: 1rem;
 
   @media (min-width: 42rem) {
     bottom: 0;
     left: 0;
+    flex-direction: row;
   }
 }
 
@@ -186,7 +188,6 @@ body {
 }
 
 .hamburger {
-  position: absolute;
   bottom: 1rem;
   width: 40px;
   height: 40px;
@@ -210,7 +211,6 @@ body {
 }
 
 .search {
-  position: absolute;
   bottom: 1rem;
   left: 3.8rem;
   width: 40px;

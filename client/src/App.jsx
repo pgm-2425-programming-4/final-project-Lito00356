@@ -67,8 +67,8 @@ export default function MyApp() {
             </g>
           </svg>
         </button>
-        <button className="button" id="opened-menu">
-          <svg className="hamburger-opened" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <button className="button hamburger-open" id="opened-menu">
+          <svg className="" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
             <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
             <g id="SVGRepo_iconCarrier">
