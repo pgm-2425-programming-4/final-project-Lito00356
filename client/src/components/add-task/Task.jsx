@@ -33,6 +33,18 @@ export function AddTask() {
     setShowDialog(true);
   }
 
+  function closeDialog() {
+    setShowDialog(false);
+  }
+
+  function editTask() {
+    alert("You are trying to edit the task");
+  }
+
+  function deleteTask() {
+    alert("You are trying to delete the task");
+  }
+
   return (
     <>
       <ul className="task">
@@ -70,19 +82,28 @@ export function AddTask() {
         <dialog className="modal" open>
           <div className="modal__section-1">
             <h2>Task title</h2>
-            <ul className="modal__tags">
-              <li className="modal__tags-item">front-end</li>
-              <li className="modal__tags-item">backend</li>
-              <li className="modal__tags-item">JS</li>
-              <li className="modal__tags-item">HTML</li>
-            </ul>
+            <div className="modal__list-order">
+              <ul className="modal__tags">
+                <li className="modal__tags-item">front-end</li>
+                <li className="modal__tags-item">backend</li>
+                <li className="modal__tags-item">JS</li>
+                <li className="modal__tags-item">HTML</li>
+              </ul>
+              <button className="button button--add-tag">+ Tag</button>
+            </div>
             <strong>Description</strong>
             <p className="modal__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia sunt optio hic earum praesentium eius consectetur molestias, et sapiente provident expedita reprehenderit asperiores deserunt, ipsum libero quos vitae beatae modi minima ut vero distinctio. Veniam nam ut hic veritatis harum mollitia totam ipsam eaque incidunt, temporibus culpa eius corporis? Accusantium.</p>
           </div>
           <div className="modal__section-2">
-            <p className="modal__close">X</p>
-            <button>edit task</button>
-            <button>delete task</button>
+            <button className="button modal__close" onClick={closeDialog}>
+              X
+            </button>
+            <button className="button" onClick={editTask}>
+              edit task
+            </button>
+            <button className="button" onClick={deleteTask}>
+              delete task
+            </button>
           </div>
         </dialog>
       ) : (
