@@ -71,6 +71,11 @@
   padding: 0.4rem;
 }
 
+.hamburger__svg {
+  width: 1.25rem;
+  justify-self: center;
+}
+
 .hamburger-closed {
   display: block;
 }
