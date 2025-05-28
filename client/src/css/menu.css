@@ -17,18 +17,18 @@
 .scroll-menu {
   display: inline;
   position: absolute;
-  width: 15rem;
-  left: 3.1875rem;
   bottom: 1rem;
+  right: 3.5rem;
+  width: 10rem;
   height: fit-content;
-  max-height: 350px;
-  overflow-y: auto;
-  background-color: var(--bg-color);
   padding: 1rem;
-  transition: width 1s ease;
+  border-radius: 5px 5px 0 5px;
+  background-color: red;
 
-  @starting-style {
-    display: none;
+  @media (min-width: 42rem) {
+    bottom: 1rem;
+    left: 3.5rem;
+    border-radius: 5px 5px 5px 0;
   }
 }
 
