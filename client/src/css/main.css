@@ -24,7 +24,6 @@ body {
 .tasks-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
 
   @media (min-width: 42rem) {
     justify-content: flex-start;
@@ -127,24 +126,28 @@ body {
 .menu-items {
   position: absolute;
   bottom: 0;
-  left: 0;
+  right: 0;
   display: flex;
   gap: 0.5rem;
   padding: 1rem;
+
+  @media (min-width: 42rem) {
+    bottom: 0;
+    left: 0;
+  }
 }
 
 .scroll-menu {
-  display: none;
+  display: inline;
   position: absolute;
   width: 15rem;
-  width: 0;
+  left: 3.1875rem;
+  bottom: 1rem;
   height: fit-content;
   max-height: 350px;
   overflow-y: auto;
   background-color: var(--bg-color);
   padding: 1rem;
-  bottom: 16px;
-  left: 51px;
   transition: width 1s ease;
 
   @starting-style {
