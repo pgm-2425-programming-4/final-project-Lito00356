@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { getAllTasks } from "../../queries/get-tasks";
+import { getPaginatedBacklogTasks } from "../../queries/get-backlog-tasks";
 import { BacklogList } from "./backlog-list/backlog-list";
 import { Pagination } from "./pagination/pagination";
 
@@ -10,7 +10,7 @@ export function PaginatedBacklog() {
 
   const { isPending, isError, data, error } = useQuery({
     queryKey: ["tasks", currentPage, pageSize],
-    queryFn: () => getAllTasks(currentPage, pageSize),
+    queryFn: () => getPaginatedBacklogTasks(currentPage, pageSize),
     staleTime: 1000,
   });
 
@@ -34,13 +34,7 @@ export function PaginatedBacklog() {
       <div>
         <BacklogList tasks={tasks} />
       </div>
-      <Pagination
-        currentPage={currentPage}
-        pageCount={pageCount}
-        pageSize={pageSize}
-        onPageChanged={handlePageChanged}
-        onPageSizeChanged={handlePageSizeChanged}
-      />
+      <Pagination currentPage={currentPage} pageCount={pageCount} pageSize={pageSize} onPageChanged={handlePageChanged} onPageSizeChanged={handlePageSizeChanged} />
     </>
   );
 }
