@@ -35,15 +35,6 @@ export default function MyApp() {
       </section>
 
       <div className="menu-items">
-        <div className="scroll-menu" id="menu">
-          <div className="menu__current-project">
-            <strong>Project title</strong>
-            <a href="#">Backlog</a>
-          </div>
-          <div className="menu__projects">
-            <strong className="menu__projects-title">Other projects</strong>
-          </div>
-        </div>
         <ProjectMenu />
 
         <SearchBar />
