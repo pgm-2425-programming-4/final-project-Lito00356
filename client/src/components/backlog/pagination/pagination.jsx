@@ -35,7 +35,7 @@ export function Pagination({ currentPage, pageCount, onPageChanged }) {
       pageLinks.push(
         <li key={index}>
           <span className="pagination-ellipsis">&hellip;</span>
-        </li>
+        </li>,
       );
     } else {
       pageLinks.push(
@@ -50,7 +50,7 @@ export function Pagination({ currentPage, pageCount, onPageChanged }) {
           >
             {pageNumber}
           </button>
-        </li>
+        </li>,
       );
     }
   });
