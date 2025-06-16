@@ -22,7 +22,12 @@ export function SearchBar() {
           </g>
         </svg>
       </button>
-      {openSearchBar ? <button className="button">Search</button> : ""}
+      <form className={`search-form ${openSearchBar ? "open" : ""}`}>
+        <label className={`search-form__label ${openSearchBar ? "open" : ""}`}>
+          <input type="text" className="search-form__input" />
+        </label>
+        <button className={`search-action ${openSearchBar ? "open" : ""}`}>Search</button>
+      </form>
     </>
   );
 }
