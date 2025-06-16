@@ -1,6 +1,11 @@
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
 export function AddTask() {
+  const queryClient = useQueryClient();
+
+  const data = useQuery({ queryKey: ["tasks"], queryFn: getTasks });
+
   const [tasks, setTasks] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [addTask, setAddTask] = useState(false);
@@ -58,16 +63,8 @@ export function AddTask() {
       {showForm ? (
         <article className="task__item task__item--creation">
           <form className="form">
-            <label
-              className={`form__label ${addTask ? "" : "form__label--none"}`}
-            >
-              <input
-                className="form__input"
-                type="text"
-                placeholder="Title"
-                vlaue={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
+            <label className={`form__label ${addTask ? "" : "form__label--none"}`}>
+              <input className="form__input" type="text" placeholder="Title" vlaue={title} onChange={(e) => setTitle(e.target.value)} />
             </label>
             <div
               className="form__commit"
@@ -101,14 +98,8 @@ export function AddTask() {
             </div>
             <strong>Description</strong>
             <p className="modal__description">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
-              sunt optio hic earum praesentium eius consectetur molestias, et
-              sapiente provident expedita reprehenderit asperiores deserunt,
-              ipsum libero quos vitae beatae modi minima ut vero distinctio.
-              Veniam nam ut hic veritatis harum mollitia totam ipsc veritatis
-              harum mollitia totam ipsam eac veritatis harum mollitia totam
-              ipsam eac veritatis harum mollitia totam ipsam eaam eaque
-              incidunt, temporibus culpa eius corporis? Accusantium.
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia sunt optio hic earum praesentium eius consectetur molestias, et sapiente provident expedita reprehenderit asperiores deserunt, ipsum libero quos vitae beatae modi minima ut vero distinctio. Veniam nam ut hic veritatis harum mollitia totam ipsc veritatis harum mollitia totam ipsam eac veritatis harum mollitia totam ipsam eac veritatis harum mollitia totam ipsam eaam eaque incidunt, temporibus culpa eius corporis?
+              Accusantium.
             </p>
           </div>
           <div className="modal__section-2">
@@ -127,11 +118,7 @@ export function AddTask() {
         ""
       )}
 
-      <button
-        className="button"
-        onClick={openForm}
-        style={{ display: addTask ? "none" : "inline-block" }}
-      >
+      <button className="button" onClick={openForm} style={{ display: addTask ? "none" : "inline-block" }}>
         + Add Task
       </button>
     </>

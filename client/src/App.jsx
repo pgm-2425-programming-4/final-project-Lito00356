@@ -1,5 +1,4 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import "./App.css";
 import { PaginatedBacklog } from "./components/backlog/paginated-backlog";
 import { AddTask } from "./components/add-task/Task";
 import { ProjectMenu } from "./components/project-menu/ProjectMenu";
