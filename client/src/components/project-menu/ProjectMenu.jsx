@@ -27,12 +27,16 @@ export function ProjectMenu() {
             </svg>
           </button>
           <div className="scroll-menu open" id="menu">
-            <div className="menu__current-project">
-              <strong>Project title</strong>
-              <a href="#">Backlog</a>
-            </div>
             <div className="menu__projects">
-              <strong className="menu__projects-title">Other projects</strong>
+              <a href="#" className="menu__projects-item">
+                About
+              </a>
+              <a href="#" className="menu__projects-item item-extra">
+                Other projects <span>&#9654;</span>
+              </a>
+              <a href="#" className="menu__projects-item">
+                Backlog
+              </a>
             </div>
           </div>
         </>

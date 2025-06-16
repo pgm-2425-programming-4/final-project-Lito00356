@@ -34,7 +34,6 @@
 
 .scroll-menu.open {
   animation-name: openMenuX, openMenuY;
-  animation-delay: 0s, 0.5s;
   animation-duration: 0.3s, 0.3s;
   animation-fill-mode: forwards;
 }
@@ -56,7 +55,7 @@
     height: 0;
   }
   to {
-    height: fit-content;
+    height: 10rem;
   }
 }
 
@@ -71,11 +70,21 @@
 .menu__projects {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
 }
 
-.menu__projects-title {
-  align-self: flex-start;
+.menu__projects-item {
+  text-decoration: none;
+  color: var(--text-color);
+  padding: 0.5rem;
+
+  &:hover {
+    background-color: var(--bg-color);
+  }
+}
+
+.item-extra {
+  display: flex;
+  justify-content: space-between;
 }
 
 .form__close {

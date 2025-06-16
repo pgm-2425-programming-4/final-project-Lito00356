@@ -8,10 +8,12 @@
   --bg-color: rgba(206, 206, 206, 0.452);
   --bg-color-hover: rgba(206, 206, 206, 0.226);
   --box-shadow: 0 5px 15px -10px rgba(0, 0, 0, 0.5);
+  --text-color: rgb(20, 20, 20);
 }
 
 body {
   font-family: "Montserrat", Arial, Helvetica, sans-serif;
+  color: var(--text-color);
 }
 
 .title {
