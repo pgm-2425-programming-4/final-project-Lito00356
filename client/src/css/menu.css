@@ -76,6 +76,7 @@
   text-decoration: none;
   color: var(--text-color);
   padding: 0.5rem;
+  cursor: pointer;
 
   &:hover {
     background-color: var(--bg-color);
@@ -115,16 +116,6 @@
 
 .hamburger-closed {
   display: block;
-}
-
-.search {
-  bottom: 1rem;
-  left: 3.8rem;
-  width: 40px;
-  height: 40px;
-  background-color: var(--bg-color);
-  border-radius: 50%;
-  padding: 0.4rem;
 }
 
 .hamburger.open {

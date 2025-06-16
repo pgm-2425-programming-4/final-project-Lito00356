@@ -36,7 +36,9 @@ export default function MyApp() {
       <div className="menu-items">
         <ProjectMenu />
 
-        <SearchBar />
+        <div className="flex">
+          <SearchBar />
+        </div>
       </div>
     </QueryClientProvider>
   );
