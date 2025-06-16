@@ -1,0 +1,15 @@
+.search {
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: var(--bg-color);
+  border-radius: 50%;
+  padding: 0.4rem;
+}
+
+.search.open {
+  width: 20rem;
+}
+
+.flex {
+  display: flex;
+}

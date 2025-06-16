@@ -31,9 +31,9 @@ export function ProjectMenu() {
               <a href="#" className="menu__projects-item">
                 About
               </a>
-              <a href="#" className="menu__projects-item item-extra">
+              <span href="#" className="menu__projects-item item-extra">
                 Other projects <span>&#9654;</span>
-              </a>
+              </span>
               <a href="#" className="menu__projects-item">
                 Backlog
               </a>
