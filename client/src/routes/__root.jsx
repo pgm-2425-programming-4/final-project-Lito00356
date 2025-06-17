@@ -8,8 +8,6 @@ export const Route = createRootRoute({
       <header className="app-header">
         <nav>
           <Link to="/">Home</Link>
-          <Link to="/about">About</Link>
-          <Link to="/backlog">Backlog</Link>
         </nav>
       </header>
       <main className="app-main">
