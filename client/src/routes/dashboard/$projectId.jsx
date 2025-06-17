@@ -1,11 +1,11 @@
 import React from "react";
-import { useParams, createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { getProjectById } from "../queries/get-projects"; // adjust path as needed
+import { createFileRoute } from "@tanstack/react-router";
+import { getProjectById } from "../../queries/get-projects";
 
-export const Route = {
-  component: function dashboard() {
-    const { projectId } = useParams();
+export const Route = createFileRoute("/dashboard/$projectId")({
+  component: function DashboardProject() {
+    const { projectId } = Route.useParams();
 
     const {
       data: project,
@@ -26,4 +26,4 @@ export const Route = {
       </div>
     );
   },
-};
+});
