@@ -55,7 +55,6 @@ export function AddTaskButton() {
       <button className="button" onClick={openForm} style={{ display: addTask ? "none" : "inline-block" }}>
         + Add Task
       </button>
-      ;
     </>
   );
 }
