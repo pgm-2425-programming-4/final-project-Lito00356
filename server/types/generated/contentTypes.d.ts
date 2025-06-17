@@ -481,6 +481,7 @@ export interface ApiTaskTask extends Struct.CollectionTypeSchema {
       'oneToOne',
       'api::progress-status.progress-status'
     >;
+    project: Schema.Attribute.Relation<'oneToOne', 'api::project.project'>;
     publishedAt: Schema.Attribute.DateTime;
     tags: Schema.Attribute.Relation<'oneToMany', 'api::tag.tag'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
