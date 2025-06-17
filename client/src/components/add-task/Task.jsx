@@ -1,10 +1,11 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { getTasks } from "../../queries/get-tasks";
 
 export function AddTask() {
   const queryClient = useQueryClient();
 
-  const data = useQuery({ queryKey: ["tasks"], queryFn: getTasks });
+  const { isPending, isError, data, error } = useQuery({ queryKey: ["tasks"], queryFn: getTasks });
 
   const [tasks, setTasks] = useState([]);
   const [showForm, setShowForm] = useState(false);
@@ -12,6 +13,33 @@ export function AddTask() {
   const [hideAddToList, setHideAddToList] = useState(false);
   const [title, setTitle] = useState("");
   const [showDialog, setShowDialog] = useState(false);
+
+  if (isPending) {
+    return <span>Loading...</span>;
+  }
+
+  if (isError) {
+    return <span>Error: {error.message}</span>;
+  }
+
+  const fetchedTasks = data?.data || [];
+
+  const statusColumn = {
+    toDo: [],
+    inProgress: [],
+    readyForReview: [],
+    done: [],
+  };
+
+  fetchedTasks.forEach((task) => {
+    const statusName = task.progress_status?.progStatus;
+
+    if (statusName && statusColumn[statusName]) {
+      statusColumn[statusName].push(task);
+    } else {
+      console.log("task not found");
+    }
+  });
 
   function openForm() {
     setShowForm(true);
@@ -53,9 +81,9 @@ export function AddTask() {
   return (
     <>
       <ul className="task">
-        {tasks.map((title, index) => (
-          <li className="task__item" key={index} onClick={openDialog}>
-            {title}
+        {data.data.map((task) => (
+          <li className="task__item" key={task.id} onClick={openDialog}>
+            {task.title}
           </li>
         ))}
       </ul>
