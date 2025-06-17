@@ -27,8 +27,7 @@
     "progress_status": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::progress-status.progress-status",
-      "inversedBy": "task"
+      "target": "api::progress-status.progress-status"
     },
     "project": {
       "type": "relation",
