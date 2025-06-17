@@ -2,7 +2,8 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { getProjectById } from "../../queries/get-project-by-id";
-import { AddTask, DisplayTask } from "../../components/task";
+import { DisplayTask } from "../../components/task";
+import { AddTaskButton } from "../../components/add-task/add-task";
 import { ProjectMenu } from "../../components/project-menu/project-menu";
 import { SearchBar } from "../../components/search-bar/SearchBar";
 
@@ -56,6 +57,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
             {statusColumn.done.map((task) => (
               <DisplayTask key={task.id} task={task.title} />
             ))}
+            <AddTaskButton />
           </div>
 
           <div className="tasks" id="in-progress">
