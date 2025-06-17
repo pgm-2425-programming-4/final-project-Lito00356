@@ -37,18 +37,21 @@ export function DisplayTask({ task = [], tags = [] }) {
       {showDialog ? (
         <dialog className="modal" open>
           <div className="modal__section-1">
-            <h2>Task title</h2>
+            <h2>{task.title}</h2>
             <div className="modal__list-order">
               <ul className="modal__tags">
-                <li className="modal__tags-item">front-end</li>
-                <li className="modal__tags-item">backend</li>
-                <li className="modal__tags-item">JS</li>
-                <li className="modal__tags-item">HTML</li>
+                {tags.map((tag) => {
+                  return (
+                    <li className="modal__tags-item" key={tag.id}>
+                      {tag.tagName}
+                    </li>
+                  );
+                })}
               </ul>
               <button className="button button--add-tag">+ Tag</button>
             </div>
             <strong>Description</strong>
-            <p className="modal__description"></p>
+            <p className="modal__description">{task.description}</p>
           </div>
           <div className="modal__section-2">
             <button className="button modal__close" onClick={closeDialog}>

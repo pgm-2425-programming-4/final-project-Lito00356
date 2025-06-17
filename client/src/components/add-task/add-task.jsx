@@ -1,7 +1,6 @@
 import { useState } from "react";
 
-export function AddTaskButton() {
-  const [taskList, setTaskList] = useState([]);
+export function AddTaskButton({ status, onAddTask }) {
   const [showForm, setShowForm] = useState(false);
   const [addTask, setAddTask] = useState(false);
   const [hideAddToList, setHideAddToList] = useState(false);
@@ -9,11 +8,13 @@ export function AddTaskButton() {
 
   function addTaskToList(event) {
     event.preventDefault();
-    setTaskList([...taskList, title]);
-    setTitle("");
-    setShowForm(false);
-    setHideAddToList(true);
-    setAddTask(false);
+    if (title.trim()) {
+      onAddTask(title, status); // Pass title and status up
+      setTitle("");
+      setShowForm(false);
+      setHideAddToList(true);
+      setAddTask(false);
+    }
   }
 
   function openForm() {
@@ -32,7 +33,7 @@ export function AddTaskButton() {
     <>
       {showForm ? (
         <article className="task__item task__item--creation">
-          <form className="form">
+          <form className="form" type="POST">
             <label className={`form__label ${addTask ? "" : "form__label--none"}`}>
               <input className="form__input" type="text" placeholder="Title" vlaue={title} onChange={(e) => setTitle(e.target.value)} />
             </label>

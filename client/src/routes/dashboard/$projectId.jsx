@@ -1,11 +1,9 @@
-import React from "react";
+import { React, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { getProjectById } from "../../queries/get-project-by-id";
 import { DisplayTask } from "../../components/task";
 import { AddTaskButton } from "../../components/add-task/add-task";
-import { ProjectMenu } from "../../components/project-menu/project-menu";
-import { SearchBar } from "../../components/search-bar/SearchBar";
 
 export const Route = createFileRoute("/dashboard/$projectId")({
   component: function DashboardProject() {
@@ -24,6 +22,8 @@ export const Route = createFileRoute("/dashboard/$projectId")({
     if (error) return <div>Error loading project.</div>;
     if (!project) return <div>Project not found.</div>;
 
+    const [tasks, setTasks] = useState(project.tasks);
+
     const allTaks = project.tasks;
 
     console.log(allTaks);
@@ -33,6 +33,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
       inProgress: [],
       readyForReview: [],
       done: [],
+      backlog: [],
     };
 
     allTaks.forEach((task) => {
@@ -45,12 +46,23 @@ export const Route = createFileRoute("/dashboard/$projectId")({
         statusColumn.readyForReview.push(task);
       } else if (progStatus === "done") {
         statusColumn.done.push(task);
+      } else {
+        statusColumn.backlog.push(task);
       }
     });
 
+    function handleAddTask(title, status) {
+      // Add to backend or update local state
+      // Example for local state:
+      setTasks((prev) => [...prev, { title, status }]);
+    }
+
     return (
       <>
-        <h1 className="title">{project.projectName}</h1>
+        <div className="flex baseline">
+          <h1 className="title">{project.projectName}</h1>
+          <small>project</small>
+        </div>
         <section className="tasks-container">
           <div className="tasks" id="to-do">
             <strong className="tasks__title">To Do</strong>
@@ -59,7 +71,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
                 <DisplayTask key={task.id} task={task} tags={task.tags} />
               ))}
             </ul>
-            <AddTaskButton />
+            <AddTaskButton status="toDo" onAddTask={handleAddTask} />
           </div>
 
           <div className="tasks" id="in-progress">
@@ -69,7 +81,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
                 <DisplayTask key={task.id} task={task} tags={task.tags} />
               ))}
             </ul>
-            <AddTaskButton />
+            <AddTaskButton status="inProgress" />
           </div>
 
           <div className="tasks" id="in-progress">
@@ -79,7 +91,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
                 <DisplayTask key={task.id} task={task} tags={task.tags} />
               ))}
             </ul>
-            <AddTaskButton />
+            <AddTaskButton status="readyForReview" />
           </div>
 
           <div className="tasks" id="in-progress">
@@ -89,17 +101,9 @@ export const Route = createFileRoute("/dashboard/$projectId")({
                 <DisplayTask key={task.id} task={task} tags={task.tags} />
               ))}
             </ul>
-            <AddTaskButton />
+            <AddTaskButton status="done" />
           </div>
         </section>
-
-        <div className="menu-items">
-          <ProjectMenu />
-
-          <div className="flex">
-            <SearchBar />
-          </div>
-        </div>
       </>
     );
   },
