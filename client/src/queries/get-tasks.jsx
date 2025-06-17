@@ -10,7 +10,6 @@ export async function getTasks() {
   });
 
   const data = await result.json();
-  console.log(data);
 
-  return data;
+  return data.data;
 }
