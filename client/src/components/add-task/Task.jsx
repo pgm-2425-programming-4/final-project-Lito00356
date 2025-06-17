@@ -1,28 +1,14 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { getTasks } from "../../queries/get-tasks";
 
-export function AddTask() {
-  const queryClient = useQueryClient();
+export function AddTask({ tasks = [] }) {
+  console.log(tasks);
 
-  const { isPending, isError, data, error } = useQuery({ queryKey: ["tasks"], queryFn: getTasks });
-
-  const [tasks, setTasks] = useState([]);
+  const [taskList, setTaskList] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [addTask, setAddTask] = useState(false);
   const [hideAddToList, setHideAddToList] = useState(false);
   const [title, setTitle] = useState("");
   const [showDialog, setShowDialog] = useState(false);
-
-  if (isPending) {
-    return <span>Loading...</span>;
-  }
-
-  if (isError) {
-    return <span>Error: {error.message}</span>;
-  }
-
-  const fetchedTasks = data?.data || [];
 
   const statusColumn = {
     toDo: [],
@@ -30,18 +16,6 @@ export function AddTask() {
     readyForReview: [],
     done: [],
   };
-
-  fetchedTasks.forEach((task) => {
-    const statusName = task.progress_status?.progStatus;
-
-    if (statusName && statusColumn[statusName]) {
-      statusColumn[statusName].push(task);
-    } else {
-      console.log("task not found");
-    }
-  });
-
-  console.log("Grouped Tasks by Status:", statusColumn);
 
   function openForm() {
     setShowForm(true);
@@ -57,7 +31,7 @@ export function AddTask() {
 
   function addTaskToList(event) {
     event.preventDefault();
-    setTasks([...tasks, title]);
+    setTaskList([...taskList, title]);
     setTitle("");
     setShowForm(false);
     setHideAddToList(true);
@@ -83,7 +57,7 @@ export function AddTask() {
   return (
     <>
       <ul className="task">
-        {data.data.map((task) => (
+        {tasks.map((task) => (
           <li className="task__item" key={task.id} onClick={openDialog}>
             {task.title}
           </li>
@@ -127,10 +101,7 @@ export function AddTask() {
               <button className="button button--add-tag">+ Tag</button>
             </div>
             <strong>Description</strong>
-            <p className="modal__description">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia sunt optio hic earum praesentium eius consectetur molestias, et sapiente provident expedita reprehenderit asperiores deserunt, ipsum libero quos vitae beatae modi minima ut vero distinctio. Veniam nam ut hic veritatis harum mollitia totam ipsc veritatis harum mollitia totam ipsam eac veritatis harum mollitia totam ipsam eac veritatis harum mollitia totam ipsam eaam eaque incidunt, temporibus culpa eius corporis?
-              Accusantium.
-            </p>
+            <p className="modal__description"></p>
           </div>
           <div className="modal__section-2">
             <button className="button modal__close" onClick={closeDialog}>

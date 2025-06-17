@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "@tanstack/react-router";
 
 export function ProjectMenu() {
   const [openMenu, setOpenMenu] = useState(false);
@@ -26,15 +27,16 @@ export function ProjectMenu() {
       </button>
       <div className={`scroll-menu ${openMenu ? "open" : ""}`} id="menu">
         <div className="menu__projects">
-          <a href="#" className={`menu__projects-item ${openMenu ? "open" : ""}`}>
+          <Link to="about" className={`menu__projects-item ${openMenu ? "open" : ""}`}>
             About
-          </a>
+          </Link>
+
           <span href="#" className={`menu__projects-item item-extra ${openMenu ? "open" : ""}`}>
             Other projects <span>&#9654;</span>
           </span>
-          <a href="#" className={`menu__projects-item ${openMenu ? "open" : ""}`}>
+          <Link to="backlog" className={`menu__projects-item ${openMenu ? "open" : ""}`}>
             Backlog
-          </a>
+          </Link>
         </div>
       </div>
     </>
