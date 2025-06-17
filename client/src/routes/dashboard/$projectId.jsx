@@ -2,8 +2,8 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { getProjectById } from "../../queries/get-project-by-id";
-import { AddTask } from "../../components/add-task/Task";
-import { ProjectMenu } from "../../components/project-menu/ProjectMenu";
+import { AddTask, DisplayTask } from "../../components/task";
+import { ProjectMenu } from "../../components/project-menu/project-menu";
 import { SearchBar } from "../../components/search-bar/SearchBar";
 
 export const Route = createFileRoute("/dashboard/$projectId")({
@@ -23,7 +23,29 @@ export const Route = createFileRoute("/dashboard/$projectId")({
     if (error) return <div>Error loading project.</div>;
     if (!project) return <div>Project not found.</div>;
 
-    console.log(project.tasks);
+    const allTaks = project.tasks;
+
+    const statusColumn = {
+      toDo: [],
+      inProgress: [],
+      readyForReview: [],
+      done: [],
+    };
+
+    allTaks.forEach((task) => {
+      const progStatus = task.progress_status?.progStatus;
+      if (progStatus === "toDo") {
+        statusColumn.toDo.push(task);
+      } else if (progStatus === "inProgress") {
+        statusColumn.inProgress.push(task);
+      } else if (progStatus === "readyForReview") {
+        statusColumn.readyForReview.push(task);
+      } else if (progStatus === "done") {
+        statusColumn.done.push(task);
+      }
+    });
+
+    console.log(statusColumn);
 
     return (
       <>
@@ -31,22 +53,21 @@ export const Route = createFileRoute("/dashboard/$projectId")({
         <section className="tasks-container">
           <div className="tasks" id="to-do">
             <strong className="tasks__title">To Do</strong>
-            <AddTask tasks={project.tasks} />
+            {statusColumn.done.map((task) => (
+              <DisplayTask key={task.id} task={task.title} />
+            ))}
           </div>
 
           <div className="tasks" id="in-progress">
             <strong className="tasks__title">In progress</strong>
-            {/* <AddTask /> */}
           </div>
 
           <div className="tasks" id="in-progress">
             <strong className="tasks__title">Ready for review</strong>
-            {/* <AddTask /> */}
           </div>
 
           <div className="tasks" id="in-progress">
             <strong className="tasks__title">Done</strong>
-            {/* <AddTask /> */}
           </div>
         </section>
 

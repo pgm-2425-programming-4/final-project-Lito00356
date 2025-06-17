@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { PaginatedBacklog } from "./components/backlog/paginated-backlog";
-import { AddTask } from "./components/add-task/Task";
-import { ProjectMenu } from "./components/project-menu/ProjectMenu";
+import { AddTask } from "./components/task";
+import { ProjectMenu } from "./components/project-menu/project-menu";
 import { SearchBar } from "./components/search-bar/SearchBar";
 
 const queryClient = new QueryClient();
