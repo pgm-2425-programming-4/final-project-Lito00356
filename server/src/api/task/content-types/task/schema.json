@@ -28,11 +28,6 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::progress-status.progress-status"
-    },
-    "project": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::project.project"
     }
   }
 }
