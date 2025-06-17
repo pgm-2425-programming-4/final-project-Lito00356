@@ -24,7 +24,7 @@ export const Route = createFileRoute("/")({
         <ul>
           {data.map((project) => (
             <li key={project.id}>
-              <Link to="/dashboard/$projectId" params={{ projectId: project.id }}>
+              <Link to="/dashboard/$projectId" params={{ projectId: project.documentId }}>
                 {project.projectName}
               </Link>
             </li>
