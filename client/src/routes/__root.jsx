@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Outlet, createRootRoute, Link } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+import { ProjectMenu } from "../components/project-menu/ProjectMenu";
 
 export const Route = createRootRoute({
   component: () => (
@@ -10,10 +11,10 @@ export const Route = createRootRoute({
           <Link to="backlog">Backlog</Link>
         </nav>
       </header>
-      <main className="app-main">
+      <main className="root">
         <Outlet />
       </main>
-      <TanStackRouterDevtools initialIsOpen={false} />
+      {/* <TanStackRouterDevtools initialIsOpen={false} /> */}
     </>
   ),
 });

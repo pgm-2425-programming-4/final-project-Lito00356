@@ -23,13 +23,15 @@ export const Route = createFileRoute("/dashboard/$projectId")({
     if (error) return <div>Error loading project.</div>;
     if (!project) return <div>Project not found.</div>;
 
+    console.log(project.tasks);
+
     return (
       <>
         <h1 className="title">{project.projectName}</h1>
         <section className="tasks-container">
           <div className="tasks" id="to-do">
             <strong className="tasks__title">To Do</strong>
-            {/* <AddTask /> */}
+            <AddTask tasks={project.tasks} />
           </div>
 
           <div className="tasks" id="in-progress">
@@ -49,9 +51,11 @@ export const Route = createFileRoute("/dashboard/$projectId")({
         </section>
 
         <div className="menu-items">
-          {/* <ProjectMenu /> */}
+          <ProjectMenu />
 
-          <div className="flex">{/* <SearchBar /> */}</div>
+          <div className="flex">
+            <SearchBar />
+          </div>
         </div>
       </>
     );

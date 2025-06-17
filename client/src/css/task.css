@@ -34,10 +34,15 @@
   display: flex;
   padding: 0.5rem 0.75rem;
   margin-bottom: 1rem;
+  cursor: pointer;
 
   &:last-child {
     margin-bottom: 0;
   }
+}
+
+.task__item:hover {
+  scale: 1.02;
 }
 
 .task__item--creation {
