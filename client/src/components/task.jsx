@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function DisplayTask({ tasks = [] }) {
+export function DisplayTask({ task = [], tags = [] }) {
   const [showDialog, setShowDialog] = useState(false);
 
   function openDialog() {
@@ -21,13 +21,18 @@ export function DisplayTask({ tasks = [] }) {
 
   return (
     <>
-      <ul className="task">
-        {tasks.map((task) => (
-          <li className="task__item" key={task.id} onClick={openDialog}>
-            {task.title}
-          </li>
-        ))}
-      </ul>
+      <li className="task__item" key={task.id} onClick={openDialog}>
+        <span>{task.title}</span>
+        <ul className="modal__tags">
+          {tags.map((tag) => {
+            return (
+              <li className="modal__tags-item" key={tag.id}>
+                {tag.tagName}
+              </li>
+            );
+          })}
+        </ul>
+      </li>
 
       {showDialog ? (
         <dialog className="modal" open>

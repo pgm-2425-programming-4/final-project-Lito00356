@@ -26,6 +26,8 @@ export const Route = createFileRoute("/dashboard/$projectId")({
 
     const allTaks = project.tasks;
 
+    console.log(allTaks);
+
     const statusColumn = {
       toDo: [],
       inProgress: [],
@@ -46,30 +48,48 @@ export const Route = createFileRoute("/dashboard/$projectId")({
       }
     });
 
-    console.log(statusColumn);
-
     return (
       <>
         <h1 className="title">{project.projectName}</h1>
         <section className="tasks-container">
           <div className="tasks" id="to-do">
             <strong className="tasks__title">To Do</strong>
-            {statusColumn.done.map((task) => (
-              <DisplayTask key={task.id} task={task.title} />
-            ))}
+            <ul className="task">
+              {statusColumn.toDo.map((task) => (
+                <DisplayTask key={task.id} task={task} tags={task.tags} />
+              ))}
+            </ul>
             <AddTaskButton />
           </div>
 
           <div className="tasks" id="in-progress">
             <strong className="tasks__title">In progress</strong>
+            <ul className="task">
+              {statusColumn.inProgress.map((task) => (
+                <DisplayTask key={task.id} task={task} tags={task.tags} />
+              ))}
+            </ul>
+            <AddTaskButton />
           </div>
 
           <div className="tasks" id="in-progress">
             <strong className="tasks__title">Ready for review</strong>
+            <ul className="task">
+              {statusColumn.readyForReview.map((task) => (
+                <DisplayTask key={task.id} task={task} tags={task.tags} />
+              ))}
+            </ul>
+            <AddTaskButton />
           </div>
 
           <div className="tasks" id="in-progress">
             <strong className="tasks__title">Done</strong>
+            <ul className="task">
+              {statusColumn.done.map((task) => (
+                <DisplayTask key={task.id} task={task} tags={task.tags} />
+              ))}
+            </ul>
+            <AddTaskButton />
           </div>
         </section>
 
