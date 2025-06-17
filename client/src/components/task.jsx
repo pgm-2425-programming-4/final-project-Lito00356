@@ -1,21 +1,12 @@
 import { useState } from "react";
 
-export function AddTask({ tasks = [] }) {
-  console.log(tasks);
-
+export function DisplayTask({ tasks = [] }) {
   const [taskList, setTaskList] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [addTask, setAddTask] = useState(false);
   const [hideAddToList, setHideAddToList] = useState(false);
   const [title, setTitle] = useState("");
   const [showDialog, setShowDialog] = useState(false);
-
-  const statusColumn = {
-    toDo: [],
-    inProgress: [],
-    readyForReview: [],
-    done: [],
-  };
 
   function openForm() {
     setShowForm(true);

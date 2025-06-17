@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Outlet, createRootRoute, Link } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
-import { ProjectMenu } from "../components/project-menu/ProjectMenu";
+import { ProjectMenu } from "../components/project-menu/project-menu";
 
 export const Route = createRootRoute({
   component: () => (
