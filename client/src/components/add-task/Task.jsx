@@ -41,6 +41,8 @@ export function AddTask() {
     }
   });
 
+  console.log("Grouped Tasks by Status:", statusColumn);
+
   function openForm() {
     setShowForm(true);
     setAddTask(true);

@@ -396,7 +396,6 @@ export interface ApiProgressStatusProgressStatus
       Schema.Attribute.Private;
     progStatus: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
-    task: Schema.Attribute.Relation<'oneToOne', 'api::task.task'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
