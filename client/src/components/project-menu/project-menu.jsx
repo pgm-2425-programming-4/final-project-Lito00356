@@ -3,6 +3,11 @@ import { Link } from "@tanstack/react-router";
 
 export function ProjectMenu() {
   const [openMenu, setOpenMenu] = useState(false);
+  const [openProjects, setOpenProjects] = useState(false);
+
+  function openSideMenu() {
+    setOpenProjects((prev) => !prev);
+  }
 
   function openProjectMenu() {
     setOpenMenu(true);
@@ -30,9 +35,13 @@ export function ProjectMenu() {
           <Link to="about" className={`menu__projects-item ${openMenu ? "open" : ""}`}>
             About
           </Link>
-
-          <span href="#" className={`menu__projects-item item-extra ${openMenu ? "open" : ""}`}>
+          <span className={`menu__projects-item item-extra ${openMenu ? "open" : ""}`} onClick={openSideMenu}>
             Other projects <span>&#9654;</span>
+            <ul className={`project-container ${openProjects ? "open" : ""}`}>
+              <li className="menu__projects-">Projec1</li>
+              <li className="menu__projects-">Projec1</li>
+              <li className="menu__projects-">Projec1</li>
+            </ul>
           </span>
           <Link to="backlog" className={`menu__projects-item ${openMenu ? "open" : ""}`}>
             Backlog
