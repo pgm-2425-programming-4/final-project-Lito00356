@@ -17,7 +17,7 @@
     },
     "description": {
       "type": "text",
-      "required": true
+      "required": false
     },
     "tags": {
       "type": "relation",
