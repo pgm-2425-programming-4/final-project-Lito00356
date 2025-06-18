@@ -8,7 +8,14 @@ export const Route = createFileRoute("/backlog")({
 function RouteComponent() {
   return (
     <>
-      <PaginatedBacklog />
+      <nav>
+        <ul>
+          <li>Project 1</li>
+        </ul>
+      </nav>
+      <main>
+        <PaginatedBacklog />
+      </main>
     </>
   );
 }

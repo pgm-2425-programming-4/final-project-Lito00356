@@ -60,13 +60,9 @@ export const Route = createFileRoute("/dashboard/$projectId")({
       console.log(projectId);
 
       const requestBody = {
-        data: {
-          title,
-          progress_status: status,
-          project: {
-            connect: [10],
-          },
-        },
+        title,
+        status,
+        projectId,
       };
       try {
         const response = await fetch(`${API_URL}/tasks`, {
