@@ -1,14 +1,14 @@
-import { React, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import React, { useState } from "react";
+import { useQueryClient, useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { getProjectById } from "../../queries/get-project-by-id";
 import { DisplayTask } from "../../components/task";
 import { AddTaskButton } from "../../components/add-task/add-task";
+import { API_TOKEN, API_URL } from "../../constants/constants";
 
 export const Route = createFileRoute("/dashboard/$projectId")({
   component: function DashboardProject() {
     const { projectId } = Route.useParams();
-
     const {
       data: project,
       isLoading,
@@ -18,14 +18,19 @@ export const Route = createFileRoute("/dashboard/$projectId")({
       queryFn: () => getProjectById(projectId),
     });
 
+    const [tasks, setTasks] = useState([]);
+
+    React.useEffect(() => {
+      if (project?.tasks) {
+        setTasks(project.tasks);
+      }
+    }, [project]);
+
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error loading project.</div>;
     if (!project) return <div>Project not found.</div>;
 
-    const [tasks, setTasks] = useState(project.tasks);
-
-    const allTaks = project.tasks;
-
+    const allTaks = tasks;
     console.log(allTaks);
 
     const statusColumn = {
@@ -51,11 +56,48 @@ export const Route = createFileRoute("/dashboard/$projectId")({
       }
     });
 
-    function handleAddTask(title, status) {
-      // Add to backend or update local state
-      // Example for local state:
-      setTasks((prev) => [...prev, { title, status }]);
+    async function handleAddTask(title, status) {
+      console.log(projectId);
+
+      const requestBody = {
+        data: {
+          title,
+          progress_status: status,
+          project: {
+            connect: [10],
+          },
+        },
+      };
+      try {
+        const response = await fetch(`${API_URL}/tasks`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${API_TOKEN}`,
+          },
+          body: JSON.stringify(requestBody),
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          console.error("Error details:", result);
+          throw new Error(`HTTP ${response.status}: ${JSON.stringify(result)}`);
+        }
+
+        const newTask = result.data;
+        setTasks((prev) => [...prev, newTask]);
+      } catch (error) {
+        console.error("Add task error:", error);
+      }
     }
+
+    const statusID = {
+      toDo: 7,
+      inProgress: 3,
+      readyForReview: 5,
+      done: 1,
+    };
 
     return (
       <>
@@ -71,7 +113,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
                 <DisplayTask key={task.id} task={task} tags={task.tags} />
               ))}
             </ul>
-            <AddTaskButton status="toDo" onAddTask={handleAddTask} />
+            <AddTaskButton status={statusID.toDo} onAddTask={handleAddTask} />
           </div>
 
           <div className="tasks" id="in-progress">
@@ -81,7 +123,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
                 <DisplayTask key={task.id} task={task} tags={task.tags} />
               ))}
             </ul>
-            <AddTaskButton status="inProgress" />
+            <AddTaskButton status="inProgress" onAddTask={handleAddTask} />
           </div>
 
           <div className="tasks" id="in-progress">
@@ -91,7 +133,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
                 <DisplayTask key={task.id} task={task} tags={task.tags} />
               ))}
             </ul>
-            <AddTaskButton status="readyForReview" />
+            <AddTaskButton status="readyForReview" onAddTask={handleAddTask} />
           </div>
 
           <div className="tasks" id="in-progress">
@@ -101,7 +143,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
                 <DisplayTask key={task.id} task={task} tags={task.tags} />
               ))}
             </ul>
-            <AddTaskButton status="done" />
+            <AddTaskButton status="done" onAddTask={handleAddTask} />
           </div>
         </section>
       </>
