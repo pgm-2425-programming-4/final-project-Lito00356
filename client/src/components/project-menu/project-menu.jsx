@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { PaginatedBacklog } from "../backlog/paginated-backlog";
 
-export function ProjectMenu() {
+export function ProjectMenu({ projects = [] }) {
+  console.log(projects);
+
   const [openMenu, setOpenMenu] = useState(false);
   const [openProjects, setOpenProjects] = useState(false);
 
@@ -38,9 +41,11 @@ export function ProjectMenu() {
           <span className={`menu__projects-item item-extra ${openMenu ? "open" : ""}`} onClick={openSideMenu}>
             Other projects <span>&#9654;</span>
             <ul className={`project-container ${openProjects ? "open" : ""}`}>
-              <li className="menu__projects-">Projec1</li>
-              <li className="menu__projects-">Projec1</li>
-              <li className="menu__projects-">Projec1</li>
+              {projects.map((project) => (
+                <li key={project.id}>
+                  <Link to={`/dashboard/${project.documentId}`}>{project.projectName}</Link>
+                </li>
+              ))}
             </ul>
           </span>
           <Link to="backlog" className={`menu__projects-item ${openMenu ? "open" : ""}`}>
