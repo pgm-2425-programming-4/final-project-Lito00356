@@ -35,6 +35,9 @@ export function ProjectMenu({ projects = [] }) {
       </button>
       <div className={`scroll-menu ${openMenu ? "open" : ""}`} id="menu">
         <div className="menu__projects">
+          <Link to="/" className={`menu__projects-item ${openMenu ? "open" : ""}`}>
+            Main menu
+          </Link>
           <Link to="about" className={`menu__projects-item ${openMenu ? "open" : ""}`}>
             About
           </Link>
@@ -43,7 +46,9 @@ export function ProjectMenu({ projects = [] }) {
             <ul className={`project-container ${openProjects ? "open" : ""}`}>
               {projects.map((project) => (
                 <li key={project.id}>
-                  <Link to={`/dashboard/${project.documentId}`}>{project.projectName}</Link>
+                  <Link to={`/dashboard/${project.documentId}`} className="projects-list__item">
+                    {project.projectName}
+                  </Link>
                 </li>
               ))}
             </ul>

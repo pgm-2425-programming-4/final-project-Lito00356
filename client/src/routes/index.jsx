@@ -19,17 +19,19 @@ export const Route = createFileRoute("/")({
     }
 
     return (
-      <div>
-        <h1>Choose a Project</h1>
-        <ul>
-          {data.map((project) => (
-            <li key={project.id}>
-              <Link to="/dashboard/$projectId" params={{ projectId: project.documentId }}>
-                {project.projectName}
-              </Link>
-            </li>
-          ))}
-        </ul>
+      <div className="main-menu-container">
+        <div className="main-menu">
+          <h1>Choose a Project</h1>
+          <ul className="projects-list">
+            {data.map((project) => (
+              <li key={project.id}>
+                <Link to="/dashboard/$projectId" className="projects-list__item" params={{ projectId: project.documentId }}>
+                  {project.projectName}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     );
   },
