@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useQueryClient, useQuery } from "@tanstack/react-query";
+import { QueryCache, useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { getProjectById } from "../../queries/get-project-by-id";
 import { DisplayTask } from "../../components/task";
@@ -30,8 +30,8 @@ export const Route = createFileRoute("/dashboard/$projectId")({
     if (error) return <div>Error loading project.</div>;
     if (!project) return <div>Project not found.</div>;
 
-    const allTaks = tasks;
-    console.log(allTaks);
+    const allTasks = tasks;
+    console.log(allTasks);
 
     const statusColumn = {
       toDo: [],
@@ -41,7 +41,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
       backlog: [],
     };
 
-    allTaks.forEach((task) => {
+    allTasks.forEach((task) => {
       const progStatus = task.progress_status?.progStatus;
       if (progStatus === "toDo") {
         statusColumn.toDo.push(task);
@@ -57,13 +57,13 @@ export const Route = createFileRoute("/dashboard/$projectId")({
     });
 
     async function handleAddTask(title, status) {
-      console.log(projectId);
+      console.log("this is the porjectID " + projectId);
 
       const requestBody = {
         data: {
           title,
           progress_status: status,
-          project: 7,
+          project: projectId,
         },
       };
       try {
@@ -84,6 +84,8 @@ export const Route = createFileRoute("/dashboard/$projectId")({
         }
 
         const newTask = result.data;
+        console.log(newTask);
+
         setTasks((prev) => [...prev, newTask]);
       } catch (error) {
         console.error("Add task error:", error);
