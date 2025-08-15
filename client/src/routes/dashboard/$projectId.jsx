@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { QueryCache, useQuery } from "@tanstack/react-query";
+import { QueryCache, QueryClient, useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { getProjectById } from "../../queries/get-project-by-id";
 import { DisplayTask } from "../../components/task";
@@ -13,6 +13,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
       data: project,
       isLoading,
       error,
+      refetch,
     } = useQuery({
       queryKey: ["project", projectId],
       queryFn: () => getProjectById(projectId),
@@ -31,7 +32,6 @@ export const Route = createFileRoute("/dashboard/$projectId")({
     if (!project) return <div>Project not found.</div>;
 
     const allTasks = tasks;
-    console.log(allTasks);
 
     const statusColumn = {
       toDo: [],
@@ -41,24 +41,43 @@ export const Route = createFileRoute("/dashboard/$projectId")({
       backlog: [],
     };
 
+    const IDStatus = {
+      7: "toDo",
+      3: "inProgress",
+      5: "readyForReview",
+      1: "done",
+    };
+
     allTasks.forEach((task) => {
-      const progStatus = task.progress_status?.progStatus;
-      if (progStatus === "toDo") {
-        statusColumn.toDo.push(task);
-      } else if (progStatus === "inProgress") {
-        statusColumn.inProgress.push(task);
-      } else if (progStatus === "readyForReview") {
-        statusColumn.readyForReview.push(task);
-      } else if (progStatus === "done") {
-        statusColumn.done.push(task);
+      const prog = task.progress_status;
+      let key = "backlog";
+      if (prog) {
+        key = prog.progStatus;
+      }
+
+      if (statusColumn[key]) {
+        statusColumn[key].push(task);
       } else {
         statusColumn.backlog.push(task);
       }
     });
 
-    async function handleAddTask(title, status) {
-      console.log("this is the porjectID " + projectId);
+    // allTasks.forEach((task) => {
+    //   const progStatus = task.progress_status?.progStatus;
+    //   if (progStatus === "toDo") {
+    //     statusColumn.toDo.push(task);
+    //   } else if (progStatus === "inProgress") {
+    //     statusColumn.inProgress.push(task);
+    //   } else if (progStatus === "readyForReview") {
+    //     statusColumn.readyForReview.push(task);
+    //   } else if (progStatus === "done") {
+    //     statusColumn.done.push(task);
+    //   } else {
+    //     statusColumn.backlog.push(task);
+    //   }
+    // });
 
+    async function handleAddTask(title, status) {
       const requestBody = {
         data: {
           title,
@@ -83,10 +102,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
           throw new Error(`HTTP ${response.status}: ${JSON.stringify(result)}`);
         }
 
-        const newTask = result.data;
-        console.log(newTask);
-
-        setTasks((prev) => [...prev, newTask]);
+        await refetch();
       } catch (error) {
         console.error("Add task error:", error);
       }
@@ -123,7 +139,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
                 <DisplayTask key={task.id} task={task} tags={task.tags} />
               ))}
             </ul>
-            <AddTaskButton status="inProgress" onAddTask={handleAddTask} />
+            <AddTaskButton status={statusID.inProgress} onAddTask={handleAddTask} />
           </div>
 
           <div className="tasks" id="in-progress">
@@ -133,7 +149,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
                 <DisplayTask key={task.id} task={task} tags={task.tags} />
               ))}
             </ul>
-            <AddTaskButton status="readyForReview" onAddTask={handleAddTask} />
+            <AddTaskButton status={statusID.readyForReview} onAddTask={handleAddTask} />
           </div>
 
           <div className="tasks" id="in-progress">
@@ -143,7 +159,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
                 <DisplayTask key={task.id} task={task} tags={task.tags} />
               ))}
             </ul>
-            <AddTaskButton status="done" onAddTask={handleAddTask} />
+            <AddTaskButton status={statusID.done} onAddTask={handleAddTask} />
           </div>
         </section>
       </>

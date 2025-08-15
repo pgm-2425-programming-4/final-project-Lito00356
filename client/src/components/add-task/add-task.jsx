@@ -9,7 +9,7 @@ export function AddTaskButton({ status, onAddTask }) {
   function addTaskToList(event) {
     event.preventDefault();
     if (title.trim()) {
-      onAddTask(title, status); // Pass title and status up
+      onAddTask(title, status);
       setTitle("");
       setShowForm(false);
       setHideAddToList(true);
