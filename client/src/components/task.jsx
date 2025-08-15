@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function DisplayTask({ task = [], tags = [] }) {
+export function DisplayTask({ task = [], tags = [], handleDelete }) {
   const [showDialog, setShowDialog] = useState(false);
 
   function openDialog() {
@@ -13,10 +13,6 @@ export function DisplayTask({ task = [], tags = [] }) {
 
   function editTask() {
     alert("You are trying to edit the task");
-  }
-
-  function deleteTask() {
-    alert("You are trying to delete the task");
   }
 
   return (
@@ -60,7 +56,7 @@ export function DisplayTask({ task = [], tags = [] }) {
             <button className="button" onClick={editTask}>
               edit task
             </button>
-            <button className="button" onClick={deleteTask}>
+            <button className="button" onClick={() => handleDelete(task)}>
               delete task
             </button>
           </div>
