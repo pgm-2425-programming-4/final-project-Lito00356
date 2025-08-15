@@ -62,21 +62,6 @@ export const Route = createFileRoute("/dashboard/$projectId")({
       }
     });
 
-    // allTasks.forEach((task) => {
-    //   const progStatus = task.progress_status?.progStatus;
-    //   if (progStatus === "toDo") {
-    //     statusColumn.toDo.push(task);
-    //   } else if (progStatus === "inProgress") {
-    //     statusColumn.inProgress.push(task);
-    //   } else if (progStatus === "readyForReview") {
-    //     statusColumn.readyForReview.push(task);
-    //   } else if (progStatus === "done") {
-    //     statusColumn.done.push(task);
-    //   } else {
-    //     statusColumn.backlog.push(task);
-    //   }
-    // });
-
     async function handleAddTask(title, status) {
       const requestBody = {
         data: {
