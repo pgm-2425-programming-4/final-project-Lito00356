@@ -41,6 +41,13 @@ export const Route = createFileRoute("/dashboard/$projectId")({
       backlog: [],
     };
 
+    const statusID = {
+      toDo: 7,
+      inProgress: 3,
+      readyForReview: 5,
+      done: 1,
+    };
+
     const IDStatus = {
       7: "toDo",
       3: "inProgress",
@@ -93,19 +100,9 @@ export const Route = createFileRoute("/dashboard/$projectId")({
       }
     }
 
-    const statusID = {
-      toDo: 7,
-      inProgress: 3,
-      readyForReview: 5,
-      done: 1,
-    };
-
     async function handleDeleteTask(task) {
       try {
-        // grab the docID from task
         const docID = task.documentId;
-        console.log(docID);
-
         const response = await fetch(`${API_URL}/tasks/${docID}`, {
           method: "DELETE",
           headers: {

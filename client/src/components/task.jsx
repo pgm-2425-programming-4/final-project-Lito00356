@@ -2,7 +2,10 @@ import { useRef, useState } from "react";
 
 export function DisplayTask({ task = [], tags = [], handleDelete }) {
   const dialogTask = useRef(null);
+  const dialogConfirm = useRef(null);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [styleDialog, setStyleDialog] = useState(false);
+
   function openDialog() {
     setStyleDialog(true);
     if (dialogTask.current) {
@@ -15,6 +18,16 @@ export function DisplayTask({ task = [], tags = [], handleDelete }) {
     if (dialogTask.current) {
       dialogTask.current.close();
     }
+  }
+
+  function openConfirm() {
+    setShowConfirm(true);
+    dialogConfirm.current?.showModal();
+  }
+
+  function closeConfirm() {
+    setShowConfirm(false);
+    dialogConfirm.current?.close();
   }
 
   function editTask() {
@@ -61,8 +74,20 @@ export function DisplayTask({ task = [], tags = [], handleDelete }) {
           <button className="button" onClick={editTask}>
             edit task
           </button>
-          <button className="button" onClick={() => handleDelete(task)}>
+          <button className="button" onClick={openConfirm}>
             delete task
+          </button>
+        </div>
+      </dialog>
+
+      <dialog className={`confirm-modal ${showConfirm ? "open" : ""}`} ref={dialogConfirm}>
+        <p>Are you sure you want to delete this task?</p>
+        <div className="button-container">
+          <button className="button button__confrim" onClick={closeConfirm}>
+            No
+          </button>
+          <button className="button button__confrim" onClick={() => handleDelete}>
+            Yes
           </button>
         </div>
       </dialog>
