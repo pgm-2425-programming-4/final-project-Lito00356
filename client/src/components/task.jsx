@@ -86,7 +86,14 @@ export function DisplayTask({ task = [], tags = [], handleDelete }) {
           <button className="button button__confrim" onClick={closeConfirm}>
             No
           </button>
-          <button className="button button__confrim" onClick={() => handleDelete}>
+          <button
+            className="button button__confrim"
+            onClick={() => {
+              handleDelete(task);
+              closeConfirm();
+              closeDialog();
+            }}
+          >
             Yes
           </button>
         </div>
