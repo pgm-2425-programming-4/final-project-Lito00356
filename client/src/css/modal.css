@@ -60,6 +60,8 @@
   border: 1px solid var(--bg-color);
   border-radius: 5px;
   padding: 0.5rem;
+  min-width: 17rem;
+  min-height: 5rem;
   max-height: 23rem;
   overflow-y: auto;
 }
