@@ -1,5 +1,4 @@
 .modal {
-  display: flex;
   flex-wrap: wrap;
   position: fixed;
   gap: 0.5rem;
@@ -13,7 +12,14 @@
   border-radius: 10px;
   border: 2px solid var(--bg-color-hover);
   box-shadow: var(--box-shadow);
-  z-index: 5;
+}
+
+.modal::backdrop {
+  background-color: rgba(105, 105, 105, 0.295);
+}
+
+.modal.open {
+  display: flex;
 }
 
 .modal__section-1 {
