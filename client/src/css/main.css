@@ -6,6 +6,8 @@
 @import url("menu.css");
 @import url("searchBar.css");
 @import url("backlog.css");
+@import url("about.css");
+@import url("footer.css");
 
 :root {
   --bg-color: rgba(206, 206, 206, 0.452);
