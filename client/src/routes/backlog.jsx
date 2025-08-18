@@ -8,13 +8,19 @@ export const Route = createFileRoute("/backlog")({
 function RouteComponent() {
   return (
     <>
-      <nav>
-        <ul>
-          <li>Project 1</li>
-        </ul>
-      </nav>
-      <main>
-        <PaginatedBacklog />
+      <main className="backlog-container">
+        <div>
+          <h1>Backlog</h1>
+          <ul>
+            <li>project1</li>
+            <li>project2</li>
+            <li>project3</li>
+          </ul>
+        </div>
+        <div>
+          <h2>for Project title</h2>
+          <PaginatedBacklog />
+        </div>
       </main>
     </>
   );

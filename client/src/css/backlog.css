@@ -1,3 +1,6 @@
+.backlog-container {
+  display: flex;
+}
 .backlog-list {
   background-color: rgb(36, 138, 61);
 }
