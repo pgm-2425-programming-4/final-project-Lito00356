@@ -38,12 +38,13 @@
 
 .projects-list {
   list-style-type: none;
-  padding: 0;
+  padding: 0.5rem;
 }
 
 .projects-list > li:hover {
   scale: 1.05;
   transform-origin: left;
+  cursor: pointer;
 }
 
 .projects-list__item {

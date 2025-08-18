@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { PaginatedBacklog } from "../backlog/paginated-backlog";
 
 export function ProjectMenu({ projects = [] }) {
   const [openMenu, setOpenMenu] = useState(false);

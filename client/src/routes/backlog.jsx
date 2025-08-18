@@ -9,16 +9,19 @@ function RouteComponent() {
   return (
     <>
       <main className="backlog-container">
-        <div>
+        <div className="projects-container">
           <h1>Backlog</h1>
-          <ul>
-            <li>project1</li>
+          <ul className="projects-list">
+            <li className="projects-list-item">project1</li>
             <li>project2</li>
             <li>project3</li>
           </ul>
         </div>
-        <div>
-          <h2>for Project title</h2>
+        <div className="outlet">
+          <div className="outlet__title">
+            <small>for</small>
+            <h2> Project title</h2>
+          </div>
           <PaginatedBacklog />
         </div>
       </main>
