@@ -152,6 +152,10 @@ export const Route = createFileRoute("/dashboard/$projectId")({
       }
     }
 
+    async function addTagHandler() {
+      alert("you've added a tag");
+    }
+
     return (
       <>
         <div className="flex baseline">
@@ -163,7 +167,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
             <strong className="tasks__title">To Do</strong>
             <ul className="task">
               {statusColumn.toDo.map((task) => (
-                <DisplayTask key={task.id} task={task} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} />
+                <DisplayTask key={task.id} task={task} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTag={addTagHandler} />
               ))}
             </ul>
             <AddTaskButton status={statusID.toDo} onAddTask={handleAddTask} />

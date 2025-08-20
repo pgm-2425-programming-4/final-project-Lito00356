@@ -1,6 +1,7 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { getAllTags } from "../queries/get-all-tags";
 
-export function DisplayTask({ task = [], tags = [], handleDelete, handleEdit }) {
+export function DisplayTask({ task = [], tags = [], handleDelete, handleEdit, handleTag }) {
   const dialogTask = useRef(null);
   const dialogConfirm = useRef(null);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -10,8 +11,6 @@ export function DisplayTask({ task = [], tags = [], handleDelete, handleEdit }) 
   const [description, setDescription] = useState(task.description);
 
   function openDialog() {
-    console.log(task);
-
     setStyleDialog(true);
     if (dialogTask.current) {
       dialogTask.current.showModal();
@@ -44,6 +43,11 @@ export function DisplayTask({ task = [], tags = [], handleDelete, handleEdit }) 
     setIsEditing(true);
   }
 
+  async function getTags() {
+    const allTags = await getAllTags();
+    console.log(allTags);
+  }
+
   return (
     <>
       <li className="task__item" key={task.id} onClick={openDialog}>
@@ -72,7 +76,9 @@ export function DisplayTask({ task = [], tags = [], handleDelete, handleEdit }) 
                 );
               })}
             </ul>
-            <button className="button button--add-tag">+ Tag</button>
+            <button className="button button--add-tag" onClick={getTags}>
+              + Tag
+            </button>
           </div>
           <strong>Description</strong>
           {isEditing ? <textarea className="" value={description ?? ""} onChange={(e) => setDescription(e.target.value)} /> : <p className="modal__description">{task.description}</p>}
