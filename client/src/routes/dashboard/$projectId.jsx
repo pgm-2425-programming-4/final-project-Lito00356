@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { getProjectById } from "../../queries/get-project-by-id";
@@ -21,7 +21,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
 
     const [tasks, setTasks] = useState([]);
 
-    React.useEffect(() => {
+    useEffect(() => {
       if (project?.tasks) {
         setTasks(project.tasks);
       }
@@ -102,8 +102,8 @@ export const Route = createFileRoute("/dashboard/$projectId")({
 
     async function handleDeleteTask(task) {
       try {
-        const docID = task.documentId;
-        const response = await fetch(`${API_URL}/tasks/${docID}`, {
+        const taskId = task.documentId;
+        const response = await fetch(`${API_URL}/tasks/${taskId}`, {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${API_TOKEN}`,
@@ -121,16 +121,16 @@ export const Route = createFileRoute("/dashboard/$projectId")({
       }
     }
 
-    async function handleEditTask(title, status) {
+    async function handleEditTask(task, title, description) {
       const requestBody = {
         data: {
           title,
-          progress_status: status,
-          project: projectId,
+          description,
         },
       };
       try {
-        const response = await fetch(`${API_URL}/tasks`, {
+        const taskId = task.documentId;
+        const response = await fetch(`${API_URL}/tasks/${taskId}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",

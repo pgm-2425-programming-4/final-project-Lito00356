@@ -10,6 +10,8 @@ export function DisplayTask({ task = [], tags = [], handleDelete, handleEdit }) 
   const [description, setDescription] = useState(task.description);
 
   function openDialog() {
+    console.log(task);
+
     setStyleDialog(true);
     if (dialogTask.current) {
       dialogTask.current.showModal();
@@ -76,7 +78,9 @@ export function DisplayTask({ task = [], tags = [], handleDelete, handleEdit }) 
           {isEditing ? <textarea className="" value={description ?? ""} onChange={(e) => setDescription(e.target.value)} /> : <p className="modal__description">{task.description}</p>}
           {isEditing ? (
             <div className="flex">
-              <button onClick={handleEdit}>Save</button>
+              <button type="button" onClick={() => handleEdit(task, title, description)}>
+                Save
+              </button>
               <button onClick={closeEdit}>Cancel</button>
             </div>
           ) : (
