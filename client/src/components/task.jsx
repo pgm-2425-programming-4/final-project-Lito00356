@@ -1,10 +1,13 @@
 import { useRef, useState } from "react";
 
-export function DisplayTask({ task = [], tags = [], handleDelete }) {
+export function DisplayTask({ task = [], tags = [], handleDelete, handleEdit }) {
   const dialogTask = useRef(null);
   const dialogConfirm = useRef(null);
   const [showConfirm, setShowConfirm] = useState(false);
   const [styleDialog, setStyleDialog] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [title, setTitle] = useState(task.title);
+  const [description, setDescription] = useState(task.description);
 
   function openDialog() {
     setStyleDialog(true);
@@ -15,9 +18,14 @@ export function DisplayTask({ task = [], tags = [], handleDelete }) {
 
   function closeDialog() {
     setStyleDialog(false);
+    setIsEditing(false);
     if (dialogTask.current) {
       dialogTask.current.close();
     }
+  }
+
+  function closeEdit() {
+    setIsEditing(false);
   }
 
   function openConfirm() {
@@ -31,7 +39,7 @@ export function DisplayTask({ task = [], tags = [], handleDelete }) {
   }
 
   function editTask() {
-    alert("You are trying to edit the task");
+    setIsEditing(true);
   }
 
   return (
@@ -51,7 +59,7 @@ export function DisplayTask({ task = [], tags = [], handleDelete }) {
 
       <dialog className={`modal ${styleDialog ? "open" : ""}`} ref={dialogTask}>
         <div className="modal__section-1">
-          <h2>{task.title}</h2>
+          {isEditing ? <input value={title} onChange={(e) => setTitle(e.target.value)} /> : <h2>{task.title}</h2>}
           <div className="modal__list-order">
             <ul className="modal__tags">
               {tags.map((tag) => {
@@ -65,7 +73,15 @@ export function DisplayTask({ task = [], tags = [], handleDelete }) {
             <button className="button button--add-tag">+ Tag</button>
           </div>
           <strong>Description</strong>
-          <p className="modal__description">{task.description}</p>
+          {isEditing ? <textarea className="" value={description ?? ""} onChange={(e) => setDescription(e.target.value)} /> : <p className="modal__description">{task.description}</p>}
+          {isEditing ? (
+            <div className="flex">
+              <button onClick={handleEdit}>Save</button>
+              <button onClick={closeEdit}>Cancel</button>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
         <div className="modal__section-2">
           <button className="button modal__close" onClick={closeDialog}>

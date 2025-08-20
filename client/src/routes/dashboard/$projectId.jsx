@@ -121,6 +121,37 @@ export const Route = createFileRoute("/dashboard/$projectId")({
       }
     }
 
+    async function handleEditTask(title, status) {
+      const requestBody = {
+        data: {
+          title,
+          progress_status: status,
+          project: projectId,
+        },
+      };
+      try {
+        const response = await fetch(`${API_URL}/tasks`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${API_TOKEN}`,
+          },
+          body: JSON.stringify(requestBody),
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          console.error("Error details:", result);
+          throw new Error(`HTTP ${response.status}: ${JSON.stringify(result)}`);
+        }
+
+        await refetch();
+      } catch (error) {
+        console.error("Add task error:", error);
+      }
+    }
+
     return (
       <>
         <div className="flex baseline">
@@ -132,7 +163,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
             <strong className="tasks__title">To Do</strong>
             <ul className="task">
               {statusColumn.toDo.map((task) => (
-                <DisplayTask key={task.id} task={task} tags={task.tags} handleDelete={handleDeleteTask} />
+                <DisplayTask key={task.id} task={task} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} />
               ))}
             </ul>
             <AddTaskButton status={statusID.toDo} onAddTask={handleAddTask} />
@@ -142,7 +173,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
             <strong className="tasks__title">In progress</strong>
             <ul className="task">
               {statusColumn.inProgress.map((task) => (
-                <DisplayTask key={task.id} task={task} tags={task.tags} handleDelete={handleDeleteTask} />
+                <DisplayTask key={task.id} task={task} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} />
               ))}
             </ul>
             <AddTaskButton status={statusID.inProgress} onAddTask={handleAddTask} />
@@ -152,7 +183,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
             <strong className="tasks__title">Ready for review</strong>
             <ul className="task">
               {statusColumn.readyForReview.map((task) => (
-                <DisplayTask key={task.id} task={task} tags={task.tags} handleDelete={handleDeleteTask} />
+                <DisplayTask key={task.id} task={task} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} />
               ))}
             </ul>
             <AddTaskButton status={statusID.readyForReview} onAddTask={handleAddTask} />
@@ -162,7 +193,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
             <strong className="tasks__title">Done</strong>
             <ul className="task">
               {statusColumn.done.map((task) => (
-                <DisplayTask key={task.id} task={task} tags={task.tags} handleDelete={handleDeleteTask} />
+                <DisplayTask key={task.id} task={task} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} />
               ))}
             </ul>
             <AddTaskButton status={statusID.done} onAddTask={handleAddTask} />

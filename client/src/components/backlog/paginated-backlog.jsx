@@ -7,12 +7,6 @@ export function PaginatedBacklog({ selectedProject, isPending, isError, error })
   const [pageSize, setPageSize] = useState(10);
   const [tasks, setTasks] = useState([]);
 
-  // const { isPending, isError, data, error } = useQuery({
-  //   queryKey: ["tasks", currentPage, pageSize],
-  //   queryFn: () => getPaginatedBacklogTasks(currentPage, pageSize),
-  //   staleTime: 1000,
-  // });
-
   useEffect(() => {
     console.log(selectedProject);
 
