@@ -89,7 +89,9 @@ export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handl
               {showTagWindow ? (
                 <div className="tags-window">
                   {allTags.map((tag) => (
-                    <button className="button">{tag.tagName}</button>
+                    <button key={tag.id} className="button button--selection-tag">
+                      {tag.tagName}
+                    </button>
                   ))}
                 </div>
               ) : (
