@@ -5,6 +5,8 @@ import { getProjectById } from "../../queries/get-project-by-id";
 import { DisplayTask } from "../../components/task";
 import { AddTaskButton } from "../../components/add-task/add-task";
 import { API_TOKEN, API_URL } from "../../constants/constants";
+import { SearchBar } from "../../components/search-bar/SearchBar";
+import { ProjectMenu } from "../../components/project-menu/project-menu";
 
 export const Route = createFileRoute("/dashboard/$projectId")({
   component: function DashboardProject() {
@@ -185,6 +187,10 @@ export const Route = createFileRoute("/dashboard/$projectId")({
       }
     }
 
+    // function handleSearch(searchValue) {
+    //   console.log(searchValue);
+    // }
+
     return (
       <>
         <div className="flex baseline">
@@ -206,23 +212,23 @@ export const Route = createFileRoute("/dashboard/$projectId")({
             <strong className="tasks__title">In progress</strong>
             <ul className="task">
               {statusColumn.inProgress.map((task) => (
-                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} />
+                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} />
               ))}
             </ul>
             <AddTaskButton status={statusID.inProgress} onAddTask={handleAddTask} />
           </div>
 
-          <div className="tasks" id="in-progress">
+          <div className="tasks" id="ready-for-review">
             <strong className="tasks__title">Ready for review</strong>
             <ul className="task">
               {statusColumn.readyForReview.map((task) => (
-                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} />
+                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} />
               ))}
             </ul>
             <AddTaskButton status={statusID.readyForReview} onAddTask={handleAddTask} />
           </div>
 
-          <div className="tasks" id="in-progress">
+          <div className="tasks" id="done">
             <strong className="tasks__title">Done</strong>
             <ul className="task">
               {statusColumn.done.map((task) => (
@@ -232,6 +238,12 @@ export const Route = createFileRoute("/dashboard/$projectId")({
             <AddTaskButton status={statusID.done} onAddTask={handleAddTask} />
           </div>
         </section>
+        <div className="menu-items">
+          <div className="flex">
+            <ProjectMenu />
+            <SearchBar />
+          </div>
+        </div>
       </>
     );
   },

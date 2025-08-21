@@ -1,9 +1,23 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { getProjects } from "../../queries/get-projects";
 
-export function ProjectMenu({ projects = [] }) {
+export function ProjectMenu() {
+  const {
+    data: projects,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["projects"],
+    queryFn: () => getProjects(),
+  });
+
   const [openMenu, setOpenMenu] = useState(false);
   const [openProjects, setOpenProjects] = useState(false);
+
+  if (isLoading) return <div>Loading projects...</div>;
+  if (error) return <div>Error loading projects.</div>;
 
   function openSideMenu() {
     setOpenProjects((prev) => !prev);
