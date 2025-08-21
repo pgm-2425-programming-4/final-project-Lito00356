@@ -10,6 +10,9 @@ export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handl
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
   const [showTagWindow, setShowTagWindow] = useState(false);
+  const [activeTags, setActiveTags] = useState(() => {
+    return tags.map((tag) => tag.id);
+  });
 
   function openDialog() {
     console.log(allTags);
@@ -54,6 +57,16 @@ export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handl
     }
   }
 
+  function handleTagActivation(tagId) {
+    setActiveTags((prev) => {
+      if (prev.includes(tagId)) {
+        return prev.filter((id) => id !== tagId);
+      } else {
+        return [...prev, tagId];
+      }
+    });
+  }
+
   return (
     <>
       <li className="task__item" key={task.id} onClick={openDialog}>
@@ -89,7 +102,7 @@ export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handl
               {showTagWindow ? (
                 <div className="tags-window">
                   {allTags.map((tag) => (
-                    <button key={tag.id} className="button button--selection-tag">
+                    <button key={tag.id} className={`button button--selection-tag ${activeTags.includes(tag.id) ? "active" : ""}`} onClick={() => handleTagActivation(tag.id)}>
                       {tag.tagName}
                     </button>
                   ))}
