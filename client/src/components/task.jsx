@@ -1,7 +1,8 @@
-import { useRef, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
+import { API_TOKEN, API_URL } from "../constants/constants";
 // import { getAllTags } from "../queries/get-all-tags";
 
-export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handleEdit }) {
+export function DisplayTask({ task = [], taskId, allTags, tags = [], handleDelete, handleEdit }) {
   const dialogTask = useRef(null);
   const dialogConfirm = useRef(null);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -13,10 +14,10 @@ export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handl
   const [activeTags, setActiveTags] = useState(() => {
     return tags.map((tag) => tag.id);
   });
+  const [debouncedTags, setDebouncedTags] = useState(activeTags);
+  const isFirstRun = useRef(true);
 
   function openDialog() {
-    console.log(allTags);
-
     setStyleDialog(true);
     if (dialogTask.current) {
       dialogTask.current.showModal();
@@ -26,6 +27,7 @@ export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handl
   function closeDialog() {
     setStyleDialog(false);
     setIsEditing(false);
+    setShowTagWindow(false);
     if (dialogTask.current) {
       dialogTask.current.close();
     }
@@ -49,6 +51,19 @@ export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handl
     setIsEditing(true);
   }
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedTags(activeTags);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [activeTags]);
+
+  useEffect(() => {
+    if (debouncedTags.length >= 0) {
+      updateTaskTags(taskId, debouncedTags);
+    }
+  }, [debouncedTags, taskId]);
+
   async function handleTagWindow() {
     if (!showTagWindow) {
       setShowTagWindow(true);
@@ -65,6 +80,33 @@ export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handl
         return [...prev, tagId];
       }
     });
+  }
+
+  async function updateTaskTags(taskId, tagIds) {
+    try {
+      const response = await fetch(`${API_URL}/tasks/${taskId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${API_TOKEN}`,
+        },
+        body: JSON.stringify({
+          data: {
+            tags: tagIds,
+          },
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        console.error("Error updating tags:", result);
+      } else {
+        console.log("✅ Tags updated:", result);
+      }
+    } catch (err) {
+      console.error("Network error:", err);
+    }
   }
 
   return (
