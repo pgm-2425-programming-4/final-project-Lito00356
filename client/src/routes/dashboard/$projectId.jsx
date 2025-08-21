@@ -163,7 +163,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
             <strong className="tasks__title">To Do</strong>
             <ul className="task">
               {statusColumn.toDo.map((task) => (
-                <DisplayTask key={task.id} task={task} taskId={task.documentId} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} />
+                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} />
               ))}
             </ul>
             <AddTaskButton status={statusID.toDo} onAddTask={handleAddTask} />
@@ -173,7 +173,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
             <strong className="tasks__title">In progress</strong>
             <ul className="task">
               {statusColumn.inProgress.map((task) => (
-                <DisplayTask key={task.id} task={task} taskId={task.documentId} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} />
+                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} />
               ))}
             </ul>
             <AddTaskButton status={statusID.inProgress} onAddTask={handleAddTask} />
@@ -183,7 +183,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
             <strong className="tasks__title">Ready for review</strong>
             <ul className="task">
               {statusColumn.readyForReview.map((task) => (
-                <DisplayTask key={task.id} task={task} taskId={task.documentId} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} />
+                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} />
               ))}
             </ul>
             <AddTaskButton status={statusID.readyForReview} onAddTask={handleAddTask} />
@@ -193,7 +193,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
             <strong className="tasks__title">Done</strong>
             <ul className="task">
               {statusColumn.done.map((task) => (
-                <DisplayTask key={task.id} task={task} taskId={task.documentId} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} />
+                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} />
               ))}
             </ul>
             <AddTaskButton status={statusID.done} onAddTask={handleAddTask} />

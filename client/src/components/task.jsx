@@ -1,8 +1,8 @@
-import { use, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { API_TOKEN, API_URL } from "../constants/constants";
 // import { getAllTags } from "../queries/get-all-tags";
 
-export function DisplayTask({ task = [], taskId, allTags, tags = [], handleDelete, handleEdit }) {
+export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handleEdit }) {
   const dialogTask = useRef(null);
   const dialogConfirm = useRef(null);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -14,8 +14,6 @@ export function DisplayTask({ task = [], taskId, allTags, tags = [], handleDelet
   const [activeTags, setActiveTags] = useState(() => {
     return tags.map((tag) => tag.id);
   });
-  const [debouncedTags, setDebouncedTags] = useState(activeTags);
-  const isFirstRun = useRef(true);
 
   function openDialog() {
     setStyleDialog(true);
@@ -51,19 +49,6 @@ export function DisplayTask({ task = [], taskId, allTags, tags = [], handleDelet
     setIsEditing(true);
   }
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedTags(activeTags);
-    }, 500);
-    return () => clearTimeout(timer);
-  }, [activeTags]);
-
-  useEffect(() => {
-    if (debouncedTags.length >= 0) {
-      updateTaskTags(taskId, debouncedTags);
-    }
-  }, [debouncedTags, taskId]);
-
   async function handleTagWindow() {
     if (!showTagWindow) {
       setShowTagWindow(true);
@@ -72,7 +57,7 @@ export function DisplayTask({ task = [], taskId, allTags, tags = [], handleDelet
     }
   }
 
-  function handleTagActivation(tagId) {
+  function handleActivateTag(tagId) {
     setActiveTags((prev) => {
       if (prev.includes(tagId)) {
         return prev.filter((id) => id !== tagId);
@@ -82,32 +67,45 @@ export function DisplayTask({ task = [], taskId, allTags, tags = [], handleDelet
     });
   }
 
-  async function updateTaskTags(taskId, tagIds) {
-    try {
-      const response = await fetch(`${API_URL}/tasks/${taskId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${API_TOKEN}`,
-        },
-        body: JSON.stringify({
-          data: {
-            tags: tagIds,
-          },
-        }),
-      });
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setDebouncedTags(activeTags);
+  //   }, 500);
+  //   return () => clearTimeout(timer);
+  // }, [activeTags]);
 
-      const result = await response.json();
+  // async function updateTaskTags(taskId, tagIds) {
+  //   try {
+  //     const response = await fetch(`${API_URL}/tasks/${taskId}`, {
+  //       method: "PUT",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${API_TOKEN}`,
+  //       },
+  //       body: JSON.stringify({
+  //         data: {
+  //           tags: tagIds,
+  //         },
+  //       }),
+  //     });
 
-      if (!response.ok) {
-        console.error("Error updating tags:", result);
-      } else {
-        console.log("✅ Tags updated:", result);
-      }
-    } catch (err) {
-      console.error("Network error:", err);
-    }
-  }
+  //     const result = await response.json();
+
+  //     if (!response.ok) {
+  //       console.error("Error updating tags:", result);
+  //     } else {
+  //       console.log("✅ Tags updated:", result);
+  //     }
+  //   } catch (err) {
+  //     console.error("Network error:", err);
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   if (debouncedTags.length >= 0) {
+  //     updateTaskTags(taskId, debouncedTags);
+  //   }
+  // }, [debouncedTags, taskId]);
 
   return (
     <>
@@ -144,7 +142,7 @@ export function DisplayTask({ task = [], taskId, allTags, tags = [], handleDelet
               {showTagWindow ? (
                 <div className="tags-window">
                   {allTags.map((tag) => (
-                    <button key={tag.id} className={`button button--selection-tag ${activeTags.includes(tag.id) ? "active" : ""}`} onClick={() => handleTagActivation(tag.id)}>
+                    <button key={tag.id} className={`button button--selection-tag ${activeTags.includes(tag.id) ? "active" : ""}`} onClick={() => handleActivateTag(tag.id)}>
                       {tag.tagName}
                     </button>
                   ))}
