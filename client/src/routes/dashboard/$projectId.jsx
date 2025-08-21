@@ -110,8 +110,10 @@ export const Route = createFileRoute("/dashboard/$projectId")({
           },
         });
 
+        const result = await response.json();
+
         if (!response.ok) {
-          const result = await response.json().catch(() => ({}));
+          console.error("Error details:", result);
           throw new Error(`${response.status}: ${JSON.stringify(result)}`);
         }
 
@@ -143,12 +145,43 @@ export const Route = createFileRoute("/dashboard/$projectId")({
 
         if (!response.ok) {
           console.error("Error details:", result);
-          throw new Error(`HTTP ${response.status}: ${JSON.stringify(result)}`);
+          throw new Error(`${response.status}: ${JSON.stringify(result)}`);
         }
 
         await refetch();
       } catch (error) {
         console.error("Add task error:", error);
+      }
+    }
+
+    async function handleTags(task, activeTags) {
+      const requestBody = {
+        data: {
+          tags: activeTags,
+        },
+      };
+
+      try {
+        const taskId = task.documentId;
+        const response = await fetch(`${API_URL}/tasks/${taskId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${API_TOKEN}`,
+          },
+          body: JSON.stringify(requestBody),
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          console.error("Error details:", result);
+          throw new Error(`${response.status}: ${JSON.stringify(result)}`);
+        }
+
+        await refetch();
+      } catch (error) {
+        console.error("Save tags error:", error);
       }
     }
 
@@ -163,7 +196,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
             <strong className="tasks__title">To Do</strong>
             <ul className="task">
               {statusColumn.toDo.map((task) => (
-                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} />
+                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} />
               ))}
             </ul>
             <AddTaskButton status={statusID.toDo} onAddTask={handleAddTask} />
