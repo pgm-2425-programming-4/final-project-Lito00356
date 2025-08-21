@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import { getAllTags } from "../queries/get-all-tags";
+import { useRef, useState } from "react";
+// import { getAllTags } from "../queries/get-all-tags";
 
-export function DisplayTask({ task = [], tags = [], handleDelete, handleEdit, handleTag }) {
+export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handleEdit }) {
   const dialogTask = useRef(null);
   const dialogConfirm = useRef(null);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -9,8 +9,11 @@ export function DisplayTask({ task = [], tags = [], handleDelete, handleEdit, ha
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
+  const [showTagWindow, setShowTagWindow] = useState(false);
 
   function openDialog() {
+    console.log(allTags);
+
     setStyleDialog(true);
     if (dialogTask.current) {
       dialogTask.current.showModal();
@@ -43,9 +46,12 @@ export function DisplayTask({ task = [], tags = [], handleDelete, handleEdit, ha
     setIsEditing(true);
   }
 
-  async function getTags() {
-    const allTags = await getAllTags();
-    console.log(allTags);
+  async function handleTagWindow() {
+    if (!showTagWindow) {
+      setShowTagWindow(true);
+    } else {
+      setShowTagWindow(false);
+    }
   }
 
   return (
@@ -76,9 +82,20 @@ export function DisplayTask({ task = [], tags = [], handleDelete, handleEdit, ha
                 );
               })}
             </ul>
-            <button className="button button--add-tag" onClick={getTags}>
-              + Tag
-            </button>
+            <div>
+              <button className="button button--add-tag" onClick={handleTagWindow}>
+                + Tag
+              </button>
+              {showTagWindow ? (
+                <div className="tags-window">
+                  {allTags.map((tag) => (
+                    <button className="button">{tag.tagName}</button>
+                  ))}
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
           </div>
           <strong>Description</strong>
           {isEditing ? <textarea className="" value={description ?? ""} onChange={(e) => setDescription(e.target.value)} /> : <p className="modal__description">{task.description}</p>}

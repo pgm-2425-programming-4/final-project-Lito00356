@@ -1,0 +1,9 @@
+.tags-window {
+  position: absolute;
+  background-color: red;
+  height: fit-content;
+  max-height: 15rem;
+  width: 14rem;
+  overflow-y: auto;
+  padding: 0.5rem;
+}
