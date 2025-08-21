@@ -8,8 +8,6 @@ export function PaginatedBacklog({ selectedProject, isPending, isError, error })
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    console.log(selectedProject);
-
     setCurrentPage(1);
   }, [selectedProject]);
 

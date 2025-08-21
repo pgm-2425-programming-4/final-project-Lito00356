@@ -145,7 +145,7 @@ function RouteComponent() {
               </li>
               <li className="footer__list-item">
                 <a className="footer__list-link imdb" href="https://www.imdb.com/name/nm10240524/?ref_=nv_sr_srsg_0_tt_1_nm_3_in_0_q_tomasz%2520liksza" target="_blank" rel="noopener noreferrer">
-                  <svg className="footer__list-icon" xmlns="http://www.w3.org/2000/svg" ariaLabel="IMDb" role="img" viewBox="0 0 512 512" fill="#000000">
+                  <svg className="footer__list-icon" xmlns="http://www.w3.org/2000/svg" aria-label="IMDb" role="img" viewBox="0 0 512 512" fill="#000000">
                     <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
                     <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
                     <g id="SVGRepo_iconCarrier">

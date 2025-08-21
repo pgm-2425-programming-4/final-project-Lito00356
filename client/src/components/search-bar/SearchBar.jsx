@@ -2,6 +2,7 @@ import { useState } from "react";
 
 export function SearchBar() {
   const [openSearchBar, setOpenSearchBar] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
 
   function openSearch() {
     setOpenSearchBar(true);
@@ -9,6 +10,14 @@ export function SearchBar() {
 
   function closeSearch() {
     setOpenSearchBar(false);
+  }
+
+  function handleSearch() {
+    console.log(searchValue);
+  }
+
+  function handleSearchInputChange(e) {
+    setSearchValue(e.target.value);
   }
 
   return (
@@ -24,9 +33,11 @@ export function SearchBar() {
       </button>
       <form className={`search-form ${openSearchBar ? "open" : ""}`}>
         <label className={`search-form__label ${openSearchBar ? "open" : ""}`}>
-          <input type="text" className="search-form__input" />
+          <input type="text" className="search-form__input" onChange={handleSearchInputChange} />
         </label>
-        <button className={`search-action ${openSearchBar ? "open" : ""}`}>Search</button>
+        <button className={`search-action ${openSearchBar ? "open" : ""}`} type="button" onClick={handleSearch}>
+          Search
+        </button>
       </form>
     </>
   );
