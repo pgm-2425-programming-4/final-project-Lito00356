@@ -25,7 +25,6 @@
   right: 0;
   display: flex;
   flex-direction: row-reverse;
-  gap: 0.5rem;
   padding: 1rem;
   z-index: 5;
 
@@ -66,8 +65,8 @@
   transition: all 0.3s ease;
 
   @media (min-width: 42rem) {
-    bottom: 1rem;
-    left: 3.5rem;
+    bottom: 0;
+    left: 2.5rem;
     border-radius: 5px 5px 5px 0;
     transform-origin: center left;
   }

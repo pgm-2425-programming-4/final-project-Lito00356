@@ -63,7 +63,6 @@ function RouteComponent() {
         <div className="menu-items">
           <div className="flex">
             <ProjectMenu />
-            <SearchBar />
           </div>
         </div>
       </main>
