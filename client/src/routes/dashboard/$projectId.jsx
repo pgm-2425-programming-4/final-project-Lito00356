@@ -111,11 +111,59 @@ export const Route = createFileRoute("/dashboard/$projectId")({
       }
     });
 
-    async function handleDrop() {}
+    async function handleDrop(e, statusId) {
+      e.preventDefault();
+      setIsDragOver(false);
+      console.log(statusId);
 
-    function handleDragOver() {}
+      try {
+        const taskData = JSON.parse(e.dataTransfer.getData("application/json"));
+        if (!taskData) {
+          return;
+        }
+        if (taskData.progress_status && taskData.progress_status.id === statusId) {
+          return;
+        }
 
-    function handleLeave() {}
+        const request = {
+          data: {
+            progress_status: statusId,
+          },
+        };
+
+        console.log(request);
+
+        const response = await fetch(`${API_URL}/tasks/${taskData.documentId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${API_TOKEN}`,
+          },
+          body: JSON.stringify(request),
+        });
+
+        if (!response.ok) {
+          const result = await response.json().catch(() => ({}));
+          console.log(result);
+
+          throw new Error("Something went wrong " + result);
+        }
+
+        await refetch();
+      } catch (error) {
+        console.error("Something went wrong " + error);
+      }
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      setIsDragOver(true);
+    }
+
+    function handleLeave(e) {
+      e.preventDefault();
+      setIsDragOver(false);
+    }
 
     async function handleAddTask(title, status) {
       const requestBody = {
@@ -250,7 +298,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
           <small>project</small>
         </div>
         <section className="tasks-container">
-          <div className="tasks" id="to-do" onDragOver={handleDragOver} onDragLeave={handleLeave} onDrop={handleDrop}>
+          <div className={`tasks ${isDragOver && isDragged ? "drag-over" : ""}`} id="to-do" onDragOver={handleDragOver} onDragLeave={handleLeave} onDrop={(e) => handleDrop(e, statusID.toDo)}>
             <strong className="tasks__title">To Do</strong>
             <ul className="task">
               {statusColumn.toDo.map((task) => (
@@ -260,7 +308,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
             <AddTaskButton status={statusID.toDo} onAddTask={handleAddTask} />
           </div>
 
-          <div className="tasks" id="in-progress" onDragOver={handleDragOver} onDragLeave={handleLeave} onDrop={handleDrop}>
+          <div className={`tasks ${isDragOver && isDragged ? "drag-over" : ""}`} id="in-progress" onDragOver={handleDragOver} onDragLeave={handleLeave} onDrop={(e) => handleDrop(e, statusID.inProgress)}>
             <strong className="tasks__title">In progress</strong>
             <ul className="task">
               {statusColumn.inProgress.map((task) => (
@@ -270,7 +318,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
             <AddTaskButton status={statusID.inProgress} onAddTask={handleAddTask} />
           </div>
 
-          <div className="tasks" id="ready-for-review" onDragOver={handleDragOver} onDragLeave={handleLeave} onDrop={handleDrop}>
+          <div className={`tasks ${isDragOver && isDragged ? "drag-over" : ""}`} id="ready-for-review" onDragOver={handleDragOver} onDragLeave={handleLeave} onDrop={(e) => handleDrop(e, statusID.readyForReview)}>
             <strong className="tasks__title">Ready for review</strong>
             <ul className="task">
               {statusColumn.readyForReview.map((task) => (
@@ -280,7 +328,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
             <AddTaskButton status={statusID.readyForReview} onAddTask={handleAddTask} />
           </div>
 
-          <div className="tasks" id="done" onDragOver={handleDragOver} onDragLeave={handleLeave} onDrop={handleDrop}>
+          <div className={`tasks ${isDragOver && isDragged ? "drag-over" : ""}`} id="done" onDragOver={handleDragOver} onDragLeave={handleLeave} onDrop={(e) => handleDrop(e, statusID.done)}>
             <strong className="tasks__title">Done</strong>
             <ul className="task">
               {statusColumn.done.map((task) => (
