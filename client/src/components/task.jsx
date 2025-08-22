@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { API_TOKEN, API_URL } from "../constants/constants";
 // import { getAllTags } from "../queries/get-all-tags";
 
-export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handleEdit, handleTags }) {
+export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handleEdit, handleTags, handleDrag }) {
   const dialogTask = useRef(null);
   const dialogConfirm = useRef(null);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -76,9 +76,19 @@ export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handl
     setShowSaveTags(isChanged);
   }, [activeTags, tags]);
 
+  function handleDragStart(e) {
+    e.stopPropagation();
+    e.dataTransfer.setData("application/json", JSON.stringify(task));
+    handleDrag(task);
+  }
+
+  function handleDragStop() {
+    handleDrag(null);
+  }
+
   return (
     <>
-      <li className="task__item" key={task.id} onClick={openDialog}>
+      <li className="task__item" key={task.id} onClick={openDialog} draggable onDragStart={handleDragStart} onDragEnd={handleDragStop}>
         <span>{task.title}</span>
         <ul className="modal__tags">
           {tags.map((tag) => {

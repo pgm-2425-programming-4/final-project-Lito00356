@@ -22,6 +22,10 @@ export const Route = createFileRoute("/dashboard/$projectId")({
     });
 
     const [tasks, setTasks] = useState([]);
+    const [taskTitles, setTaskTitles] = useState([]);
+    const [tagNames, setTagNames] = useState([]);
+    const [isDragged, setIsDragged] = useState(null);
+    const [isDragOver, setIsDragOver] = useState(false);
 
     useEffect(() => {
       if (project?.tasks) {
@@ -29,11 +33,47 @@ export const Route = createFileRoute("/dashboard/$projectId")({
       }
     }, [project]);
 
+    useEffect(() => {
+      if (project?.tasks) {
+        const titles = project.tasks.map((task) => task.title);
+        setTaskTitles(titles);
+      }
+    }, [project]);
+
+    // useEffect(() => {
+    //   if (project?.tasks) {
+    //     const names = project.tasks.flatMap((task) => task.tags?.map((tag) => tag.tagName) || []);
+    //     setTagNames(names);
+    //   }
+    // }, [project]);
+
+    useEffect(() => {
+      async function getTagNames() {
+        try {
+          const response = await fetch(`${API_URL}/tags`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${API_TOKEN}`,
+            },
+          });
+
+          const data = await response.json();
+          const fetchedTagNames = data.data.map((tag) => tag.tagName);
+          setTagNames(fetchedTagNames);
+        } catch (error) {
+          console.error("error fetching tags " + error);
+        }
+      }
+      getTagNames();
+    }, []);
+
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error loading project.</div>;
     if (!project) return <div>Project not found.</div>;
 
     const allTasks = tasks;
+    const allTagNames = tagNames;
+    const allTaskTitles = taskTitles;
 
     const statusColumn = {
       toDo: [],
@@ -70,6 +110,12 @@ export const Route = createFileRoute("/dashboard/$projectId")({
         statusColumn.backlog.push(task);
       }
     });
+
+    async function handleDrop() {}
+
+    function handleDragOver() {}
+
+    function handleLeave() {}
 
     async function handleAddTask(title, status) {
       const requestBody = {
@@ -188,7 +234,13 @@ export const Route = createFileRoute("/dashboard/$projectId")({
     }
 
     function handleSearch(searchValue) {
-      console.log(searchValue);
+      console.log(project.tasks);
+
+      console.log(allTagNames);
+      console.log(allTaskTitles);
+
+      // const projectTasks = project.tasks.map((task) => [...task]);
+      // console.log(projectTasks);
     }
 
     return (
@@ -198,41 +250,41 @@ export const Route = createFileRoute("/dashboard/$projectId")({
           <small>project</small>
         </div>
         <section className="tasks-container">
-          <div className="tasks" id="to-do">
+          <div className="tasks" id="to-do" onDragOver={handleDragOver} onDragLeave={handleLeave} onDrop={handleDrop}>
             <strong className="tasks__title">To Do</strong>
             <ul className="task">
               {statusColumn.toDo.map((task) => (
-                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} />
+                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} handleDrag={setIsDragged} />
               ))}
             </ul>
             <AddTaskButton status={statusID.toDo} onAddTask={handleAddTask} />
           </div>
 
-          <div className="tasks" id="in-progress">
+          <div className="tasks" id="in-progress" onDragOver={handleDragOver} onDragLeave={handleLeave} onDrop={handleDrop}>
             <strong className="tasks__title">In progress</strong>
             <ul className="task">
               {statusColumn.inProgress.map((task) => (
-                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} />
+                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} handleDrag={setIsDragged} />
               ))}
             </ul>
             <AddTaskButton status={statusID.inProgress} onAddTask={handleAddTask} />
           </div>
 
-          <div className="tasks" id="ready-for-review">
+          <div className="tasks" id="ready-for-review" onDragOver={handleDragOver} onDragLeave={handleLeave} onDrop={handleDrop}>
             <strong className="tasks__title">Ready for review</strong>
             <ul className="task">
               {statusColumn.readyForReview.map((task) => (
-                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} />
+                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} handleDrag={setIsDragged} />
               ))}
             </ul>
             <AddTaskButton status={statusID.readyForReview} onAddTask={handleAddTask} />
           </div>
 
-          <div className="tasks" id="done">
+          <div className="tasks" id="done" onDragOver={handleDragOver} onDragLeave={handleLeave} onDrop={handleDrop}>
             <strong className="tasks__title">Done</strong>
             <ul className="task">
               {statusColumn.done.map((task) => (
-                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} />
+                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleDrag={setIsDragged} />
               ))}
             </ul>
             <AddTaskButton status={statusID.done} onAddTask={handleAddTask} />
