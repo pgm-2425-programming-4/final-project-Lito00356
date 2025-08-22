@@ -187,9 +187,9 @@ export const Route = createFileRoute("/dashboard/$projectId")({
       }
     }
 
-    // function handleSearch(searchValue) {
-    //   console.log(searchValue);
-    // }
+    function handleSearch(searchValue) {
+      console.log(searchValue);
+    }
 
     return (
       <>
@@ -239,10 +239,8 @@ export const Route = createFileRoute("/dashboard/$projectId")({
           </div>
         </section>
         <div className="menu-items">
-          <div className="flex">
-            <ProjectMenu />
-            <SearchBar />
-          </div>
+          <ProjectMenu />
+          <SearchBar handleSearch={handleSearch} />
         </div>
       </>
     );
