@@ -1,4 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { ProjectMenu } from "../components/project-menu/project-menu";
+import { SearchBar } from "../components/search-bar/SearchBar";
 
 export const Route = createFileRoute("/about")({
   component: RouteComponent,
@@ -165,6 +167,12 @@ function RouteComponent() {
             | All rights reserved
           </small>
         </footer>
+        <div className="menu-items">
+          <div className="flex">
+            <ProjectMenu />
+            <SearchBar />
+          </div>
+        </div>
       </main>
     </>
   );

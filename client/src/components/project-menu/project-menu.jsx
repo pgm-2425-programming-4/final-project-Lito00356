@@ -49,7 +49,7 @@ export function ProjectMenu() {
           <Link to="/" className={`menu__projects-item ${openMenu ? "open" : ""}`}>
             Main menu
           </Link>
-          <Link to="about" className={`menu__projects-item ${openMenu ? "open" : ""}`}>
+          <Link to="/about" className={`menu__projects-item ${openMenu ? "open" : ""}`}>
             About
           </Link>
           <span className={`menu__projects-item item-extra ${openMenu ? "open" : ""}`} onClick={openSideMenu}>
@@ -64,7 +64,7 @@ export function ProjectMenu() {
               ))}
             </ul>
           </span>
-          <Link to="backlog" className={`menu__projects-item ${openMenu ? "open" : ""}`}>
+          <Link to="/backlog" className={`menu__projects-item ${openMenu ? "open" : ""}`}>
             Backlog
           </Link>
         </div>
