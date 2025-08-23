@@ -166,11 +166,16 @@ export const Route = createFileRoute("/dashboard/$projectId")({
           },
         });
 
-        const result = await response.json();
-
         if (!response.ok) {
-          console.error("Error details:", result);
-          throw new Error(`${response.status}: ${JSON.stringify(result)}`);
+          console.error("Delete failed:", response.status, response.statusText);
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        if (response.status === 204) {
+          console.log("Task was deleted)");
+        } else {
+          const result = await response.json();
+          console.log("Task deleted successfully:", result);
         }
 
         await refetch();
