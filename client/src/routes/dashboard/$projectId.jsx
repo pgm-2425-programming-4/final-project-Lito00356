@@ -25,7 +25,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
     const [taskTitles, setTaskTitles] = useState([]);
     const [tagNames, setTagNames] = useState([]);
     const [isDragged, setIsDragged] = useState(null);
-    const [isDragOver, setIsDragOver] = useState(false);
+    const [isDragOver, setIsDragOver] = useState(null);
 
     useEffect(() => {
       if (project?.tasks) {
@@ -114,7 +114,6 @@ export const Route = createFileRoute("/dashboard/$projectId")({
     async function handleDrop(e, statusId) {
       e.preventDefault();
       setIsDragOver(false);
-      console.log(statusId);
 
       try {
         const taskData = JSON.parse(e.dataTransfer.getData("application/json"));
@@ -131,8 +130,6 @@ export const Route = createFileRoute("/dashboard/$projectId")({
           },
         };
 
-        console.log(request);
-
         const response = await fetch(`${API_URL}/tasks/${taskData.documentId}`, {
           method: "PUT",
           headers: {
@@ -144,7 +141,6 @@ export const Route = createFileRoute("/dashboard/$projectId")({
 
         if (!response.ok) {
           const result = await response.json().catch(() => ({}));
-          console.log(result);
 
           throw new Error("Something went wrong " + result);
         }
@@ -155,14 +151,15 @@ export const Route = createFileRoute("/dashboard/$projectId")({
       }
     }
 
-    function handleDragOver(e) {
+    function handleDragOver(e, statusId) {
       e.preventDefault();
-      setIsDragOver(true);
+      setIsDragOver(statusId);
+      e.dataTransfer.dropEffect = "move";
     }
 
     function handleLeave(e) {
       e.preventDefault();
-      setIsDragOver(false);
+      setIsDragOver(null);
     }
 
     async function handleAddTask(title, status) {
@@ -286,9 +283,6 @@ export const Route = createFileRoute("/dashboard/$projectId")({
 
       console.log(allTagNames);
       console.log(allTaskTitles);
-
-      // const projectTasks = project.tasks.map((task) => [...task]);
-      // console.log(projectTasks);
     }
 
     return (
@@ -298,7 +292,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
           <small>project</small>
         </div>
         <section className="tasks-container">
-          <div className={`tasks ${isDragOver && isDragged ? "drag-over" : ""}`} id="to-do" onDragOver={handleDragOver} onDragLeave={handleLeave} onDrop={(e) => handleDrop(e, statusID.toDo)}>
+          <div className={`tasks ${isDragOver === statusID.toDo && isDragged ? "drag-over" : ""}`} id="to-do" onDragOver={(e) => handleDragOver(e, statusID.toDo)} onDragLeave={handleLeave} onDrop={(e) => handleDrop(e, statusID.toDo)}>
             <strong className="tasks__title">To Do</strong>
             <ul className="task">
               {statusColumn.toDo.map((task) => (
@@ -308,7 +302,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
             <AddTaskButton status={statusID.toDo} onAddTask={handleAddTask} />
           </div>
 
-          <div className={`tasks ${isDragOver && isDragged ? "drag-over" : ""}`} id="in-progress" onDragOver={handleDragOver} onDragLeave={handleLeave} onDrop={(e) => handleDrop(e, statusID.inProgress)}>
+          <div className={`tasks ${isDragOver === statusID.inProgress && isDragged ? "drag-over" : ""}`} id="in-progress" onDragOver={(e) => handleDragOver(e, statusID.inProgress)} onDragLeave={handleLeave} onDrop={(e) => handleDrop(e, statusID.inProgress)}>
             <strong className="tasks__title">In progress</strong>
             <ul className="task">
               {statusColumn.inProgress.map((task) => (
@@ -318,7 +312,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
             <AddTaskButton status={statusID.inProgress} onAddTask={handleAddTask} />
           </div>
 
-          <div className={`tasks ${isDragOver && isDragged ? "drag-over" : ""}`} id="ready-for-review" onDragOver={handleDragOver} onDragLeave={handleLeave} onDrop={(e) => handleDrop(e, statusID.readyForReview)}>
+          <div className={`tasks ${isDragOver === statusID.readyForReview && isDragged ? "drag-over" : ""}`} id="ready-for-review" onDragOver={(e) => handleDragOver(e, statusID.readyForReview)} onDragLeave={handleLeave} onDrop={(e) => handleDrop(e, statusID.readyForReview)}>
             <strong className="tasks__title">Ready for review</strong>
             <ul className="task">
               {statusColumn.readyForReview.map((task) => (
@@ -328,7 +322,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
             <AddTaskButton status={statusID.readyForReview} onAddTask={handleAddTask} />
           </div>
 
-          <div className={`tasks ${isDragOver && isDragged ? "drag-over" : ""}`} id="done" onDragOver={handleDragOver} onDragLeave={handleLeave} onDrop={(e) => handleDrop(e, statusID.done)}>
+          <div className={`tasks ${isDragOver === statusID.done && isDragged ? "drag-over" : ""}`} id="done" onDragOver={(e) => handleDragOver(e, statusID.done)} onDragLeave={handleLeave} onDrop={(e) => handleDrop(e, statusID.done)}>
             <strong className="tasks__title">Done</strong>
             <ul className="task">
               {statusColumn.done.map((task) => (
