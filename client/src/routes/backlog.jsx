@@ -61,9 +61,7 @@ function RouteComponent() {
           <PaginatedBacklog selectedProject={selectedProject} isLoading={isLoading} error={error} />
         </div>
         <div className="menu-items">
-          <div className="flex">
-            <ProjectMenu />
-          </div>
+          <ProjectMenu />
         </div>
       </main>
     </>

@@ -22,10 +22,9 @@ export const Route = createFileRoute("/dashboard/$projectId")({
     });
 
     const [tasks, setTasks] = useState([]);
-    const [taskTitles, setTaskTitles] = useState([]);
-    const [tagNames, setTagNames] = useState([]);
     const [isDragged, setIsDragged] = useState(null);
     const [isDragOver, setIsDragOver] = useState(null);
+    const [searchResults, setSearchResults] = useState([]);
 
     useEffect(() => {
       if (project?.tasks) {
@@ -33,47 +32,11 @@ export const Route = createFileRoute("/dashboard/$projectId")({
       }
     }, [project]);
 
-    useEffect(() => {
-      if (project?.tasks) {
-        const titles = project.tasks.map((task) => task.title);
-        setTaskTitles(titles);
-      }
-    }, [project]);
-
-    // useEffect(() => {
-    //   if (project?.tasks) {
-    //     const names = project.tasks.flatMap((task) => task.tags?.map((tag) => tag.tagName) || []);
-    //     setTagNames(names);
-    //   }
-    // }, [project]);
-
-    useEffect(() => {
-      async function getTagNames() {
-        try {
-          const response = await fetch(`${API_URL}/tags`, {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${API_TOKEN}`,
-            },
-          });
-
-          const data = await response.json();
-          const fetchedTagNames = data.data.map((tag) => tag.tagName);
-          setTagNames(fetchedTagNames);
-        } catch (error) {
-          console.error("error fetching tags " + error);
-        }
-      }
-      getTagNames();
-    }, []);
-
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error loading project.</div>;
     if (!project) return <div>Project not found.</div>;
 
     const allTasks = tasks;
-    const allTagNames = tagNames;
-    const allTaskTitles = taskTitles;
 
     const statusColumn = {
       toDo: [],
@@ -279,10 +242,20 @@ export const Route = createFileRoute("/dashboard/$projectId")({
     }
 
     function handleSearch(searchValue) {
-      console.log(project.tasks);
+      if (!searchValue.trim()) {
+        setSearchResults([]);
+        return;
+      }
 
-      console.log(allTagNames);
-      console.log(allTaskTitles);
+      const query = searchValue.toLowerCase();
+
+      const results = allTasks.filter((task) => {
+        const titleMatch = task.title.toLowerCase().includes(query);
+        const tagMatch = task.tags?.some((tag) => tag.tagName.toLowerCase().includes(query));
+        return titleMatch || tagMatch;
+      });
+
+      setSearchResults(results);
     }
 
     return (

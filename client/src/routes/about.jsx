@@ -168,10 +168,8 @@ function RouteComponent() {
           </small>
         </footer>
         <div className="menu-items">
-          <div className="flex">
-            <ProjectMenu />
-            <SearchBar />
-          </div>
+          <ProjectMenu />
+          <SearchBar />
         </div>
       </main>
     </>
