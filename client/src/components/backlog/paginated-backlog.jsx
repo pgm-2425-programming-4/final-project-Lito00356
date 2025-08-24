@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { BacklogList } from "./backlog-list/backlog-list";
 import { Pagination } from "./pagination/pagination";
+import { DisplayTask } from "../task";
 
 export function PaginatedBacklog({ selectedProject, isPending, isError, error }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,12 +28,11 @@ export function PaginatedBacklog({ selectedProject, isPending, isError, error })
   }
 
   async function fetchBacklogItems(project, pageSize, currentPage) {
+    const backlogTasks = project.tasks ? project.tasks.filter((task) => task.progress_status?.progStatus === "backlog") : [];
+
     let start = pageSize * (currentPage - 1);
-    let tasks = [];
-    for (let i = start; i < Math.min(start + pageSize, project.tasks.length); i++) {
-      tasks.push(project.tasks[i]);
-    }
-    setTasks(tasks);
+    const paginatedTasks = backlogTasks.slice(start, start + pageSize);
+    setTasks(paginatedTasks);
   }
 
   if (isPending) return <span>Loading...</span>;
@@ -46,8 +46,14 @@ export function PaginatedBacklog({ selectedProject, isPending, isError, error })
             <small>for</small>
             <h2>{selectedProject.projectName}</h2>
           </div>
-          <BacklogList tasks={tasks} />
-          <Pagination currentPage={currentPage} pageCount={Math.ceil(selectedProject.tasks.length / pageSize)} pageSize={pageSize} onPageChanged={handlePageChanged} onPageSizeChanged={handlePageSizeChanged} />
+          <div className="outlet-taskwrapper">
+            {tasks.map((task) => (
+              <DisplayTask key={task.id} task={task} />
+            ))}
+          </div>
+          <div className="pagination-wrapper">
+            <Pagination currentPage={currentPage} pageCount={Math.ceil(selectedProject.tasks.length / pageSize)} pageSize={pageSize} onPageChanged={handlePageChanged} onPageSizeChanged={handlePageSizeChanged} />
+          </div>
         </>
       ) : (
         <div>

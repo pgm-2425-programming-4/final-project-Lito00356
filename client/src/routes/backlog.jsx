@@ -14,7 +14,6 @@ export const Route = createFileRoute("/backlog")({
 function RouteComponent() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [params, setParams] = useState(Route.useParams());
-  const [taskAmount, setTaskAmount] = useState(0);
 
   const {
     data: projects,

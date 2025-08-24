@@ -32,3 +32,8 @@
   align-items: center;
   gap: 0.5rem;
 }
+
+.outlet-taskwrapper {
+  margin: 0 1.5rem;
+  max-width: 25rem;
+}
