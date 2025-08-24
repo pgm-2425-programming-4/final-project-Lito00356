@@ -32,7 +32,13 @@ export function SearchBar({ handleSearch }) {
           <label className={`search-form__label ${openSearchBar ? "open" : ""}`}>
             <input type="text" name="search" className="search-form__input" onChange={handleSearchInputChange} />
           </label>
-          <button className={`search-action ${openSearchBar ? "open" : ""}`} type="button" onClick={() => handleSearch(searchValue)}>
+          <button
+            className={`search-action ${openSearchBar ? "open" : ""}`}
+            type="button"
+            onClick={() => {
+              handleSearch(searchValue);
+            }}
+          >
             Search
           </button>
         </form>
