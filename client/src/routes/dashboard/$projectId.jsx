@@ -60,6 +60,31 @@ export const Route = createFileRoute("/dashboard/$projectId")({
       1: "done",
     };
 
+    function clearStatusColumn() {
+      Object.keys(statusColumn).forEach((key) => {
+        statusColumn[key] = [];
+      });
+    }
+
+    function populateColumns(tasks) {
+      clearStatusColumn();
+
+      tasks.forEach((task) => {
+        const prog = task.progress_status;
+        let key = "backlog";
+        if (prog) {
+          key = prog.progStatus;
+        }
+
+        if (statusColumn[key]) {
+          statusColumn[key].push(task);
+        } else {
+          statusColumn.backlog.push(task);
+        }
+      });
+    }
+
+    // FIlling the columns first time around
     allTasks.forEach((task) => {
       const prog = task.progress_status;
       let key = "backlog";
@@ -249,6 +274,8 @@ export const Route = createFileRoute("/dashboard/$projectId")({
     function handleSearch(searchValue) {
       if (!searchValue.trim()) {
         setSearchResults([]);
+        clearStatusColumn();
+        populateColumns(allTasks);
         return;
       }
 
@@ -260,7 +287,10 @@ export const Route = createFileRoute("/dashboard/$projectId")({
         return titleMatch || tagMatch;
       });
 
+      console.log(results);
       setSearchResults(results);
+      populateColumns(results);
+      console.log(statusColumn);
     }
 
     return (
