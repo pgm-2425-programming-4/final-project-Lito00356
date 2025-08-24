@@ -50,9 +50,12 @@ function RouteComponent() {
           <ul className="projects-list">
             {projects.map((project) => (
               <li key={project.id} className="projects-list-item">
-                <Link to={`/backlog?projectId=${project.documentId}`} onClick={() => handleClick(project.documentId)}>
-                  {project.projectName}
-                </Link>
+                <div>
+                  <Link to={`/backlog?projectId=${project.documentId}`} onClick={() => handleClick(project.documentId)}>
+                    {project.projectName}
+                  </Link>
+                  <small>amount</small>
+                </div>
               </li>
             ))}
           </ul>
