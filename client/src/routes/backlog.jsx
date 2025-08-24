@@ -14,6 +14,7 @@ export const Route = createFileRoute("/backlog")({
 function RouteComponent() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [params, setParams] = useState(Route.useParams());
+  const [taskAmount, setTaskAmount] = useState(0);
 
   const {
     data: projects,
@@ -48,16 +49,19 @@ function RouteComponent() {
         <div className="projects-container">
           <h1>Backlog</h1>
           <ul className="projects-list">
-            {projects.map((project) => (
-              <li key={project.id} className="projects-list-item">
-                <div>
-                  <Link to={`/backlog?projectId=${project.documentId}`} onClick={() => handleClick(project.documentId)}>
-                    {project.projectName}
-                  </Link>
-                  <small>amount</small>
-                </div>
-              </li>
-            ))}
+            {projects.map((project) => {
+              const taskCount = project.tasks ? project.tasks.filter((task) => task.progress_status?.progStatus === "backlog").length : 0;
+              return (
+                <li key={project.id} className="projects-list-item">
+                  <div className="backlog-list-wrapper">
+                    <Link to={`/backlog?projectId=${project.documentId}`} onClick={() => handleClick(project.documentId)}>
+                      {project.projectName}
+                    </Link>
+                    <small>{taskCount}</small>
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         </div>
         <div className="outlet">

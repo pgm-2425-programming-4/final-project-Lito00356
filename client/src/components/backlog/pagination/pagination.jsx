@@ -38,9 +38,7 @@ export function Pagination({ currentPage, pageCount, onPageChanged }) {
       <button className="pagination-previous" disabled={currentPage === 1} onClick={() => onPageChanged(currentPage - 1)}>
         Previous
       </button>
-      <ul className="pagination-list">
-        <li>{pageLinks}</li>
-      </ul>
+      <ul className="pagination-list">{pageLinks}</ul>
       <button className="pagination-next" disabled={currentPage === pageCount} onClick={() => onPageChanged(currentPage + 1)}>
         Next page
       </button>
