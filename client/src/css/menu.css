@@ -33,6 +33,7 @@
     bottom: 0;
     left: 0;
     flex-direction: row;
+    max-width: 10rem;
   }
 }
 

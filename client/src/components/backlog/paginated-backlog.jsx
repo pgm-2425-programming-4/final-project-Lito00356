@@ -52,13 +52,13 @@ export function PaginatedBacklog({ selectedProject, isPending, isError, error, r
             <small>for</small>
             <h2>{selectedProject.projectName}</h2>
           </div>
-          <div className="">
-            <div className="outlet-taskwrapper">
+          <div className="outlet-taskwrapper">
+            <div className="outlet__tasks">
               {tasks.map((task) => (
                 <DisplayTask key={task.id} task={task} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} handleStatusChange={handleStatusChange} />
               ))}
             </div>
-            <div className="">
+            <div className="outlet-add-wrapper">
               <small>Add to backlog</small>
               <AddTaskButton status={9} onAddTask={handleAddTask} />
             </div>

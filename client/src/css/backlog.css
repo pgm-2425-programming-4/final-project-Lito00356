@@ -35,5 +35,19 @@
 
 .outlet-taskwrapper {
   margin: 0 1.5rem;
-  max-width: 25rem;
+  display: flex;
+  justify-content: space-between;
+  height: 85dvh;
+}
+
+.outlet__tasks {
+  padding-top: 1rem;
+  width: 15rem;
+}
+
+.outlet-add-wrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 15rem;
+  align-self: end;
 }
