@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import { BacklogList } from "./backlog-list/backlog-list";
 import { Pagination } from "./pagination/pagination";
 import { DisplayTask } from "../task";
+import { useTaskHandlers } from "../../handlers/handlers";
 
-export function PaginatedBacklog({ selectedProject, isPending, isError, error }) {
+export function PaginatedBacklog({ selectedProject, isPending, isError, error, refetch }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [tasks, setTasks] = useState([]);
@@ -35,6 +36,10 @@ export function PaginatedBacklog({ selectedProject, isPending, isError, error })
     setTasks(paginatedTasks);
   }
 
+  console.log(selectedProject);
+
+  const { handleAddTask, handleDeleteTask, handleEditTask, handleTags } = useTaskHandlers(refetch, selectedProject);
+
   if (isPending) return <span>Loading...</span>;
   if (isError) return <span>Error: {error.message}</span>;
 
@@ -48,7 +53,7 @@ export function PaginatedBacklog({ selectedProject, isPending, isError, error })
           </div>
           <div className="outlet-taskwrapper">
             {tasks.map((task) => (
-              <DisplayTask key={task.id} task={task} />
+              <DisplayTask key={task.id} task={task} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} />
             ))}
           </div>
           <div className="pagination-wrapper">

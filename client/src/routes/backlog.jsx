@@ -5,7 +5,6 @@ import { Link } from "@tanstack/react-router";
 import { getProjects } from "../queries/get-projects";
 import { useState, useEffect } from "react";
 import { ProjectMenu } from "../components/project-menu/project-menu";
-import { SearchBar } from "../components/search-bar/SearchBar";
 
 export const Route = createFileRoute("/backlog")({
   component: RouteComponent,
@@ -19,6 +18,7 @@ function RouteComponent() {
     data: projects,
     isLoading,
     error,
+    refetch,
   } = useQuery({
     queryKey: ["projects"],
     queryFn: () => getProjects(),
@@ -64,7 +64,7 @@ function RouteComponent() {
           </ul>
         </div>
         <div className="outlet">
-          <PaginatedBacklog selectedProject={selectedProject} isLoading={isLoading} error={error} />
+          <PaginatedBacklog selectedProject={selectedProject} isLoading={isLoading} error={error} refetch={refetch} />
         </div>
         <div className="menu-items">
           <ProjectMenu />
