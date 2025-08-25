@@ -11,7 +11,11 @@
   }
 
   &:hover {
-    background-color: var(--bg-color-hover);
+    background-color: var(--bg-color-accent-hover);
+
+    @media (min-width: 42rem) {
+      background-color: var(--bg-color-hover);
+    }
   }
 }
 

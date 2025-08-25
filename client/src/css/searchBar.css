@@ -7,7 +7,8 @@
 .search {
   width: 2.5rem;
   height: 2.5rem;
-  background-color: var(--bg-color);
+  background-color: var(--bg-color-accent);
+
   border-top-left-radius: 25px;
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
@@ -23,6 +24,7 @@
 
   @media (min-width: 42rem) {
     transform-origin: right center;
+    background-color: var(--bg-color);
   }
 }
 
@@ -119,7 +121,11 @@
 }
 
 .search-action:hover {
-  background-color: var(--bg-color-hover);
+  background-color: var(--bg-color-accent-hover);
+
+  @media (min-width: 42rem) {
+    background-color: var(--bg-color-hover);
+  }
 }
 
 .search-action.open {

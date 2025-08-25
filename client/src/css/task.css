@@ -1,6 +1,7 @@
 .tasks-container {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 
   @media (min-width: 42rem) {
     justify-content: flex-start;
@@ -19,6 +20,10 @@
 
   &.drag-over {
     background-color: rgba(200, 220, 255, 0.6);
+  }
+
+  &.last {
+    margin-bottom: 4rem;
   }
 }
 

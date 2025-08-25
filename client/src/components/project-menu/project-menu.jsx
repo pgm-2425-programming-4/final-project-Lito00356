@@ -53,11 +53,11 @@ export function ProjectMenu() {
             About
           </Link>
           <span className={`menu__projects-item item-extra ${openMenu ? "open" : ""}`} onClick={openSideMenu}>
-            Other projects <span>&#9654;</span>
+            <span className="arrow-left">&#9664;</span> Other projects <span className="arrow-right">&#9654;</span>
             <ul className={`project-container ${openProjects ? "open" : ""}`}>
               {projects.map((project) => (
                 <li key={project.id}>
-                  <Link to={`/dashboard/${project.documentId}`} className="projects-list__item">
+                  <Link to={`/dashboard/${project.documentId}`} className="projects-list__link">
                     {project.projectName}
                   </Link>
                 </li>
