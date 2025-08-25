@@ -34,7 +34,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
       }
     }, [project]);
 
-    const { handleAddTask, handleDeleteTask, handleEditTask, handleTags } = useTaskHandlers(refetch, projectId);
+    const { handleAddTask, handleDeleteTask, handleEditTask, handleTags, handleStatusChange } = useTaskHandlers(refetch, projectId);
 
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error loading project.</div>;
@@ -184,7 +184,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
             <strong className="tasks__title">To Do</strong>
             <ul className="task">
               {columnsToDisplay.toDo.map((task) => (
-                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} handleDrag={setIsDragged} />
+                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} handleDrag={setIsDragged} handleStatusChange={handleStatusChange} />
               ))}
             </ul>
             <AddTaskButton status={statusID.toDo} onAddTask={handleAddTask} />
@@ -194,7 +194,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
             <strong className="tasks__title">In progress</strong>
             <ul className="task">
               {columnsToDisplay.inProgress.map((task) => (
-                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} handleDrag={setIsDragged} />
+                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} handleDrag={setIsDragged} handleStatusChange={handleStatusChange} />
               ))}
             </ul>
             <AddTaskButton status={statusID.inProgress} onAddTask={handleAddTask} />
@@ -204,7 +204,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
             <strong className="tasks__title">Ready for review</strong>
             <ul className="task">
               {columnsToDisplay.readyForReview.map((task) => (
-                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} handleDrag={setIsDragged} />
+                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} handleDrag={setIsDragged} handleStatusChange={handleStatusChange} />
               ))}
             </ul>
             <AddTaskButton status={statusID.readyForReview} onAddTask={handleAddTask} />
@@ -214,7 +214,7 @@ export const Route = createFileRoute("/dashboard/$projectId")({
             <strong className="tasks__title">Done</strong>
             <ul className="task">
               {columnsToDisplay.done.map((task) => (
-                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} handleDrag={setIsDragged} />
+                <DisplayTask key={task.id} task={task} allTags={project.tags} tags={task.tags} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} handleDrag={setIsDragged} handleStatusChange={handleStatusChange} />
               ))}
             </ul>
             <AddTaskButton status={statusID.done} onAddTask={handleAddTask} />

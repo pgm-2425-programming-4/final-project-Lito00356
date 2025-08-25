@@ -118,6 +118,40 @@ export function useTaskHandlers(refetch, projectId) {
       console.error("Save tags error:", error);
     }
   }
+  async function handleStatusChange(e, taskId) {
+    const status = e.target.value;
+    console.log(status);
+    console.log(taskId);
 
-  return { handleAddTask, handleDeleteTask, handleEditTask, handleTags };
+    try {
+      if (status === "null") {
+        return;
+      }
+
+      const request = {
+        data: {
+          progress_status: status,
+        },
+      };
+      const response = await fetch(`${API_URL}/tasks/${taskId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${API_TOKEN}`,
+        },
+        body: JSON.stringify(request),
+      });
+
+      if (!response.ok) {
+        const result = await response.json().catch(() => ({}));
+        throw new Error("Something went wrong " + result);
+      }
+
+      await refetch();
+    } catch (error) {
+      console.error("Something went wrong " + error);
+    }
+  }
+
+  return { handleAddTask, handleDeleteTask, handleEditTask, handleTags, handleStatusChange };
 }

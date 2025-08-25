@@ -36,9 +36,7 @@ export function PaginatedBacklog({ selectedProject, isPending, isError, error, r
     setTasks(paginatedTasks);
   }
 
-  console.log(selectedProject);
-
-  const { handleAddTask, handleDeleteTask, handleEditTask, handleTags } = useTaskHandlers(refetch, selectedProject);
+  const { handleAddTask, handleDeleteTask, handleEditTask, handleTags, handleStatusChange } = useTaskHandlers(refetch, selectedProject);
 
   if (isPending) return <span>Loading...</span>;
   if (isError) return <span>Error: {error.message}</span>;
@@ -53,7 +51,7 @@ export function PaginatedBacklog({ selectedProject, isPending, isError, error, r
           </div>
           <div className="outlet-taskwrapper">
             {tasks.map((task) => (
-              <DisplayTask key={task.id} task={task} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} />
+              <DisplayTask key={task.id} task={task} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} handleStatusChange={handleStatusChange} />
             ))}
           </div>
           <div className="pagination-wrapper">

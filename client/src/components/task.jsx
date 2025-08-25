@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { API_TOKEN, API_URL } from "../constants/constants";
-// import { getAllTags } from "../queries/get-all-tags";
 
-export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handleEdit, handleTags, handleDrag }) {
+export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handleEdit, handleTags, handleDrag, handleStatusChange }) {
   const dialogTask = useRef(null);
   const dialogConfirm = useRef(null);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -15,6 +13,13 @@ export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handl
     return tags.map((tag) => tag.id);
   });
   const [showSaveTags, setShowSaveTags] = useState(false);
+
+  const allStatus = { toDo: 7, inProgress: 3, readyForReview: 5, done: 1, backlog: 9 };
+
+  const statusArray = Object.entries(allStatus).map(([progStatus, id]) => ({
+    id,
+    progStatus,
+  }));
 
   function openDialog() {
     setStyleDialog(true);
@@ -155,6 +160,15 @@ export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handl
           <button className="button" onClick={openConfirm}>
             delete task
           </button>
+          <label htmlFor="">Change Status</label>
+          <select name="status" id="status-select" className="button" onChange={(e) => handleStatusChange(e, task.documentId)}>
+            <option value="null">Select status</option>
+            {statusArray.map((status) => (
+              <option key={status.id} value={status.id}>
+                {status.progStatus}
+              </option>
+            ))}
+          </select>
         </div>
       </dialog>
 
