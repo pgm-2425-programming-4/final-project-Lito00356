@@ -108,7 +108,7 @@ export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handl
 
       <dialog className={`modal ${styleDialog ? "open" : ""}`} ref={dialogTask}>
         <div className="modal__section-1">
-          {isEditing ? <input value={title} onChange={(e) => setTitle(e.target.value)} /> : <h2>{task.title}</h2>}
+          {isEditing ? <input className="title-editing" value={title} onChange={(e) => setTitle(e.target.value)} /> : <h2 className="title-editing">{task.title}</h2>}
           <div className="modal__list-order">
             <ul className="modal__tags">
               {tags.map((tag) => {
@@ -138,7 +138,7 @@ export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handl
             </div>
           </div>
           <strong>Description</strong>
-          {isEditing ? <textarea className="" value={description ?? ""} onChange={(e) => setDescription(e.target.value)} /> : <p className="modal__description">{task.description}</p>}
+          {isEditing ? <textarea className="modal__description editing" value={description ?? ""} onChange={(e) => setDescription(e.target.value)} /> : <p className="modal__description">{task.description}</p>}
           {isEditing ? (
             <div className="flex">
               <button type="button" onClick={() => handleEdit(task, title, description)}>
@@ -160,15 +160,17 @@ export function DisplayTask({ task = [], allTags, tags = [], handleDelete, handl
           <button className="button" onClick={openConfirm}>
             delete task
           </button>
-          <label htmlFor="">Change Status</label>
-          <select name="status" id="status-select" className="button" onChange={(e) => handleStatusChange(e, task.documentId)}>
-            <option value="null">Select status</option>
-            {statusArray.map((status) => (
-              <option key={status.id} value={status.id}>
-                {status.progStatus}
-              </option>
-            ))}
-          </select>
+          <div className="select-wrapper">
+            <label htmlFor="">Change Status</label>
+            <select name="status" id="status-select" className="button" onChange={(e) => handleStatusChange(e, task.documentId)}>
+              <option value="null">Select status</option>
+              {statusArray.map((status) => (
+                <option key={status.id} value={status.id}>
+                  {status.progStatus}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </dialog>
 

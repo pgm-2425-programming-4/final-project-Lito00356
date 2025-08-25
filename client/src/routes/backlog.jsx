@@ -51,9 +51,9 @@ function RouteComponent() {
             {projects.map((project) => {
               const taskCount = project.tasks ? project.tasks.filter((task) => task.progress_status?.progStatus === "backlog").length : 0;
               return (
-                <li key={project.id} className="projects-list-item">
+                <li key={project.id}>
                   <div className="backlog-list-wrapper">
-                    <Link to={`/backlog?projectId=${project.documentId}`} onClick={() => handleClick(project.documentId)}>
+                    <Link to={`/backlog?projectId=${project.documentId}`} className="projects-list-item" onClick={() => handleClick(project.documentId)}>
                       {project.projectName}
                     </Link>
                     <small>{taskCount}</small>
