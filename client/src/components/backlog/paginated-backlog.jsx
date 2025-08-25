@@ -3,11 +3,13 @@ import { BacklogList } from "./backlog-list/backlog-list";
 import { Pagination } from "./pagination/pagination";
 import { DisplayTask } from "../task";
 import { useTaskHandlers } from "../../handlers/handlers";
+import { AddTaskButton } from "../add-task/add-task";
 
 export function PaginatedBacklog({ selectedProject, isPending, isError, error, refetch }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [tasks, setTasks] = useState([]);
+  const [selectedProjectID, setSelectedProjectID] = useState("");
 
   useEffect(() => {
     setCurrentPage(1);
@@ -16,6 +18,7 @@ export function PaginatedBacklog({ selectedProject, isPending, isError, error, r
   useEffect(() => {
     if (selectedProject) {
       fetchBacklogItems(selectedProject, pageSize, currentPage);
+      setSelectedProjectID(selectedProject.documentId);
     }
   }, [selectedProject, currentPage, pageSize]);
 
@@ -36,7 +39,7 @@ export function PaginatedBacklog({ selectedProject, isPending, isError, error, r
     setTasks(paginatedTasks);
   }
 
-  const { handleAddTask, handleDeleteTask, handleEditTask, handleTags, handleStatusChange } = useTaskHandlers(refetch, selectedProject);
+  const { handleAddTask, handleDeleteTask, handleEditTask, handleTags, handleStatusChange } = useTaskHandlers(refetch, selectedProjectID);
 
   if (isPending) return <span>Loading...</span>;
   if (isError) return <span>Error: {error.message}</span>;
@@ -49,10 +52,16 @@ export function PaginatedBacklog({ selectedProject, isPending, isError, error, r
             <small>for</small>
             <h2>{selectedProject.projectName}</h2>
           </div>
-          <div className="outlet-taskwrapper">
-            {tasks.map((task) => (
-              <DisplayTask key={task.id} task={task} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} handleStatusChange={handleStatusChange} />
-            ))}
+          <div className="">
+            <div className="outlet-taskwrapper">
+              {tasks.map((task) => (
+                <DisplayTask key={task.id} task={task} handleDelete={handleDeleteTask} handleEdit={handleEditTask} handleTags={handleTags} handleStatusChange={handleStatusChange} />
+              ))}
+            </div>
+            <div className="">
+              <small>Add to backlog</small>
+              <AddTaskButton status={9} onAddTask={handleAddTask} />
+            </div>
           </div>
           <div className="pagination-wrapper">
             <Pagination currentPage={currentPage} pageCount={Math.ceil(selectedProject.tasks.length / pageSize)} pageSize={pageSize} onPageChanged={handlePageChanged} onPageSizeChanged={handlePageSizeChanged} />

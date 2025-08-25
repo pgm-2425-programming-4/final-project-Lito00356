@@ -2,6 +2,9 @@ import { API_TOKEN, API_URL } from "../constants/constants";
 
 export function useTaskHandlers(refetch, projectId) {
   async function handleAddTask(title, status) {
+    console.log(status);
+    console.log(projectId);
+
     const requestBody = {
       data: {
         title,
